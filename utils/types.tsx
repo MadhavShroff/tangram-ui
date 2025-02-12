@@ -214,7 +214,7 @@ export function isMessage(obj: Message): obj is Message {
     return false;
   }
 
-  for (let version of obj.versions) {
+  for (const version of obj.versions) {
     if (typeof version === "string") {
       continue;
     }

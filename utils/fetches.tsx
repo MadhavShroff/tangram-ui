@@ -6,7 +6,7 @@ import {
   areMessages,
 } from "./types";
 import { Environments, whichEnv } from "./whichEnv";
-import { Model } from "./types";
+import { Model, Graph } from "./types";
 import { Dispatch, SetStateAction } from "react";
 
 // fetches.tsx
@@ -31,7 +31,7 @@ export const fetchUser = (setUser: Dispatch<SetStateAction<null>>): Promise<void
 };
 
 // fetches.tsx
-export const fetchTestGraph = (setGraph: (data: Graph) => void): Promise<void> => {
+export const fetchTestGraph = (setGraph: (data: Graph | null) => void): Promise<void> => {
   return fetch("https://api.makeitaifor.me/test/graph/1", {
     method: "GET",
     credentials: "include",
@@ -46,12 +46,12 @@ export const fetchTestGraph = (setGraph: (data: Graph) => void): Promise<void> =
       console.log("fetchTestGraph data: ", data);
       setGraph(data);
     })
-    .catch((error) => {
+    .catch(() => {
       setGraph(null);
     });
 };
 
-export const handleFilesUpload = async (files: File[], setMessage) => {
+export const handleFilesUpload = async (files: File[], setMessage: (m: string) => void) => {
   console.log("handleFilesUpload");
   console.log("files: ", files);
   if (!files || files.length === 0) {
@@ -97,7 +97,7 @@ export const handleFilesUpload = async (files: File[], setMessage) => {
       setMessage("Upload complete");
       window.location.reload();
     })
-    .catch((error) => {
+    .catch(() => {
       setMessage("Upload failed. Try again?");
     });
 };
@@ -133,7 +133,7 @@ export const fetchChatsMetadata = async (userId: string): Promise<User> => {
       email: "ciramey479@searpen.com",
       username: "foo2",
       name: "foo2 Bar2ooqiq Oibqefib",
-      chats: mockChats,
+      chats: [],
       role: "guest",
       createdAt: new Date("2023-09-07T15:25:29.283Z"),
       updatedAt: new Date("2023-09-07T15:25:29.283Z"),
@@ -157,9 +157,9 @@ export const fetchMessagesData = async (
 ): Promise<Message[]> => {
   if (!messages || messages.length == 0) return [];
 
-  if (areMessages(messages)) return messages as Message[];
+  if (areMessages(messages as Message[])) return messages as Message[];
 
-  let messageIds = messages.filter((message) => typeof message === "string");
+  const messageIds = messages.filter((message) => typeof message === "string");
 
   if (messageIds.length !== messages.length) {
     throw new Error(
@@ -195,8 +195,8 @@ export const fetchMessagesData = async (
 };
 
 export const fetchDocumentContent = async (
-  fileKey,
-  callback
+  fileKey: string,
+  callback: (s: string) => void
 ): Promise<void> => {
   if (!fileKey) return;
   const res = await fetch(
@@ -330,7 +330,7 @@ export const setFileOrCollectionForChat = async (
 
 //returns search result for the google search module
 export const fetchGoogleSearchModuleResult = async (
-  query: String,
+  query: string,
   n: number
 ): Promise<void> => {
   const res = await fetch("http://localhost:3000/search/google",  {    //https://api.makeitaifor.me/search/google/

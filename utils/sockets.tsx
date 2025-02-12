@@ -52,7 +52,7 @@ export const emitChatSubmitted = (
   console.log('Emitting messageSubmitted: ' + chatId);
   console.log('Emitting messageSubmitted: ' + content);
   socket.emit('messageSubmitted', { content: content, chatId: chatId });
-  let queryText;
+  let queryText: string;
   socket.on('addedQueryToChat-' + chatId, async (response) => {
     response =  JSON.parse(response);
     console.log('Received response at addedQueryToChat: ', response);
@@ -70,7 +70,7 @@ export const emitChatSubmitted = (
 
     socket.emit('generateText', { query: queryText, chatId: chatId, versionId: versionId});
 
-    let buffer: { [key: number]: string } = {};
+    const buffer: { [key: number]: string } = {};
     let expectedSeq = 0;
     let bufferString = "";
 
