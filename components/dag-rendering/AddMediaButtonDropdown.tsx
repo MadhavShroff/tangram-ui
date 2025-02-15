@@ -9,18 +9,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { 
-  UploadCloud, 
-  Github, 
-  Globe, 
-  Plus 
-} from "lucide-react";
+import { UploadCloud, Github, Globe, Plus } from "lucide-react";
 import Image from "next/image";
 
 export function AddMediaButtonDropdown() {
   const [url, setUrl] = useState("");
   const [isValid, setIsValid] = useState(false);
   const [favicon, setFavicon] = useState("");
+  const [faviconError, setFaviconError] = useState(false);
 
   // Simple URL validation using the URL constructor.
   const validateUrl = (value: string) => {
@@ -35,14 +31,17 @@ export function AddMediaButtonDropdown() {
   const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setUrl(value);
+
     if (validateUrl(value)) {
       setIsValid(true);
+      setFaviconError(false); // Reset error state if we have a new valid URL
       // Extract domain from URL and generate a favicon URL (using Google's favicon service)
       const domain = new URL(value).hostname;
       setFavicon(`https://www.google.com/s2/favicons?domain=${domain}`);
     } else {
       setIsValid(false);
       setFavicon("");
+      setFaviconError(false);
     }
   };
 
@@ -54,7 +53,7 @@ export function AddMediaButtonDropdown() {
           font-medium
           text-gray-200
           px-3 py-1.5
-          hover:bg-[#353535]
+          hover:bg-[#0c2419]
           rounded-md
           transition-colors
         "
@@ -82,8 +81,17 @@ export function AddMediaButtonDropdown() {
               isValid ? "border-blue-500" : "border-gray-600"
             } rounded-md px-1 py-1 bg-gray-800`}
           >
-            {isValid && favicon ? (
-              <Image src={favicon} alt="Favicon" className="mr-1" height={20} width={20} />
+            {/* If URL is valid, we have a favicon, and no error has occurred, show the image.
+                Otherwise, show the Globe icon. */}
+            {isValid && favicon && !faviconError ? (
+              <Image
+                src={favicon}
+                alt=""
+                height={20}
+                width={20}
+                className="mr-1"
+                onError={() => setFaviconError(true)}  // If favicon fails to load, fallback to Globe.
+              />
             ) : (
               <Globe className="w-4 h-4 mr-2 text-gray-400" />
             )}
