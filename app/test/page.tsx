@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { GraphView } from "@/components/dag-rendering/GraphView";
 import { Graph } from "@/utils/types";
 import { ContextBox } from "@/components/dag-rendering/ContextBox";
+import { ArrowRight } from "lucide-react";
 // import TangramAnimation from "@/components/TangramAnimation";
 
 const TestPage = () => {
@@ -131,26 +132,69 @@ const TestPage = () => {
         ],
     });
 
-    // Example context items
-    const [contextItems] = useState<string[]>([
-        "UploadedImage.png",
-        "DraftDo123cument.pdf",
-        "DraftDo412cumeqsnt.pdf",
-        "DraftDo123cument.pdf",
-        "DraftDocu312412ment.pdf",
-        "Draft123Document.pdf",
-    ]);
+  // Example context items
+  const [contextItems] = useState<string[]>([
+    "UploadedImage.png",
+    "DraftDo123cument.pdf",
+    "DraftDo412cumeqsnt.pdf",
+    "DraftDo123cument.pdf",
+    "DraftDocu312412ment.pdf",
+    "Draft123Document.pdf",
+  ]);
 
-    return (
-        <div className="relative bg-black min-h-screen flex flex-col p-2 gap-2">
-                <ContextBox contextItems={contextItems} />
-            {/* Graph area */}
-            <div className="flex-1 border-2 border-[#f2f2f2] rounded-xl mb-2">
-                <GraphView graph={graph} />
-                {/* <TangramAnimation /> */}
-            </div>
+  // Track the "follow up" value
+  const [followUp, setFollowUp] = useState("");
+
+  // A ref for the textarea so we can measure and adjust its height
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // Whenever followUp changes, recalc the textarea height
+  useEffect(() => {
+    if (textareaRef.current) {
+      // Reset height to auto so scrollHeight is correct
+      textareaRef.current.style.height = "auto";
+      // Set height to match content
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  }, [followUp]);
+
+  return (
+    <div className="bg-black min-h-screen flex flex-col p-2 gap-2 relative">
+      {/* Main content area */}
+      <div className="flex-1 border-2 border-[#f2f2f2] rounded-xl mb-2">
+        <ContextBox contextItems={contextItems} />
+        <GraphView graph={graph} />
+      </div>
+
+      {/* Fixed textarea at bottom center */}
+      <div className="fixed flex items-center bottom-16 left-1/2 transform -translate-x-1/2 border border-[#f2f2f2] rounded-xl w-[600px] max-w-[90%] p-3 bg-black">
+        <textarea
+          ref={textareaRef}
+          value={followUp}
+          onChange={(e) => setFollowUp(e.target.value)}
+          placeholder="Ask a follow up..."
+          rows={1}
+          className="
+            w-full
+            bg-transparent
+            text-white
+            text-xl
+            font-bold
+            px-3
+            pt-[2px]
+            rounded-lg
+            focus:outline-none
+            placeholder-gray-500
+            resize-none
+            overflow-hidden
+          "
+        />
+        <div className="rounded-full border-orange-500 border-2 hover:bg-orange-500 h-[40px] w-[44px] flex items-center justify-center group">
+            <ArrowRight className="text-white group-hover:text-black" />
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default TestPage;
