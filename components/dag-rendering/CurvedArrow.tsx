@@ -79,7 +79,8 @@ const CurvedLine: React.FC<ICurvedLine> = ({
 
   // Ensure the line is going down and to the right
   if (deltaX <= 0 || deltaY <= 0) {
-    console.error('The "to" point must be down and to the right of the "from" point.');
+    // print more detailed error message
+    console.error(`Invalid coordinates: from (${from.x}, ${from.y}) to (${to.x}, ${to.y})`);
     return null;
   }
 

@@ -29,14 +29,14 @@ function LandingPage() {
           <nav className="flex items-center justify-between">
             {/* Logo */}
             <div className='flex flex-row items-center gap-2'>
+              <span className='text-2xl'>tangram.ai</span>
               <Image
                 alt="logo"
-                width={34}
-                height={34}
+                width={30}
+                height={30}
                 src="/tangram_logo.png"
                 className=""
               />
-              <span className='text-xl'>Tangram.ai</span>
             </div>
 
             {/* Navigation Items */}

@@ -10,6 +10,10 @@ const nextConfig: NextConfig = {
         hostname: "saasta.buildwithiqra.com",
       }, {
         hostname: "e1.pngegg.com",
+      },
+      {
+        protocol: "https",
+        hostname: "**",
       }
     ],
   },
