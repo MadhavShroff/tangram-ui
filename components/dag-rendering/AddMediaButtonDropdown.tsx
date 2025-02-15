@@ -9,27 +9,23 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { UploadCloud, Github, Globe, Plus, ChevronRight } from "lucide-react";
+import { UploadCloud, Github, Globe, Plus, ArrowRight } from "lucide-react";
 import Image from "next/image";
 
 export function AddMediaButtonDropdown() {
   const [url, setUrl] = useState("");
   const [isValid, setIsValid] = useState(false);
   const [favicon, setFavicon] = useState("");
-  // const [faviconError, setFaviconError] = useState(false);
 
   // Simple URL validation using the URL constructor.
   const validateUrl = (value: string): boolean => {
-    try {
-      new URL(value);
-      if (!(
-        /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)$/.test(value)
-      )) {
-        throw new Error("Invalid URL");
-      }
-      return true;
-    } catch {
-      return false;
+    const fullUrlRegex = /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)$/;
+    const simpleUrlRegex = /^(?!:\/\/)([a-zA-Z0-9-_]+\.)+[a-zA-Z]{2,}$/;
+      
+    if (!(fullUrlRegex.test(value) || simpleUrlRegex.test(value))) {
+      return false
+    } else {
+      return true
     }
   };
 
@@ -41,18 +37,14 @@ export function AddMediaButtonDropdown() {
     if (valid) {
       const domain = new URL(value).hostname;
       setFavicon(`https://www.google.com/s2/favicons?domain=${domain}`);
-      // setFaviconError(false);
     } else {
       setFavicon("");
-      // setFaviconError(false);
     }
   };
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger
-        className="inline-flex items-center gap-1 font-medium text-gray-200 px-3 py-1.5 hover:bg-[#0c2419] rounded-md transition-colors"
-      >
+      <DropdownMenuTrigger className="inline-flex items-center gap-1 font-medium text-gray-200 px-3 py-1.5 hover:bg-[#0c2419] rounded-md transition-colors">
         Add <Plus className="text-sm leading-none" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-82 p-1">
@@ -80,7 +72,6 @@ export function AddMediaButtonDropdown() {
                   height={20}
                   width={20}
                   className="mr-1"
-                  // onError={() => setFaviconError(true)}
                 />
               ) : (
                 <Globe className="w-4 h-4 mr-2 text-gray-400" />
@@ -96,7 +87,7 @@ export function AddMediaButtonDropdown() {
             {/* Chevron container */}
             <div className={`overflow-hidden transition-all duration-500 ${isValid ? "w-8 ml-1" : "w-0 ml-0"}`}>
             <div className={"h-8 w-8 border-2 border-green-300 rounded-md flex items-center justify-center hover:bg-green-200 " + (!isValid ? "hidden" : "")}>
-              <ChevronRight />
+              <ArrowRight />
             </div>
             </div>
           </div>

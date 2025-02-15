@@ -181,7 +181,7 @@ const TestPage = () => {
             text-xl
             font-bold
             px-3
-            pt-[2px]
+            pt-[1px]
             rounded-lg
             focus:outline-none
             placeholder-gray-500
