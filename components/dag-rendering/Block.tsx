@@ -59,11 +59,11 @@ export default class Block extends React.Component<IBlockProps> {
 
   getNodeBg = (color: string) => {
     switch (color) {
-      case "#86efac": return "bg-[#86efac] border-[#86efac] ";
-      case "#bef264": return "bg-[#bef264] border-[#bef264] ";
-      case "#fde047": return "bg-[#fde047] border-[#fde047] ";
-      case "#fdba74": return "bg-[#fdba74] border-[#fdba74] ";
-      default: return "bg-[#000000] border-[#000000] ";
+      case "#86efac": return "bg-[#86efac]/50 border-[#86efac] ";
+      case "#bef264": return "bg-[#bef264]/50 border-[#bef264] ";
+      case "#fde047": return "bg-[#fde047]/50 border-[#fde047] ";
+      case "#fdba74": return "bg-[#fdba74]/50 border-[#fdba74] ";
+      default: return "bg-[#000000]/50 border-[#000000] ";
     }
   }
 
@@ -107,11 +107,11 @@ export default class Block extends React.Component<IBlockProps> {
         <div
           className={
             this.getNodeBg(this.props.node.color)
-            + "bg-opacity-25 border-2 rounded-xl m-2 inline-block align-middle w-auto relative overflow-visible "
+            + "border-2 rounded-xl m-2 inline-block align-middle w-auto relative overflow-visible "
             + "hover:text-orange-500"
           }
         >
-          <div className={this.getNodeBg(this.props.node.color) + "bg-opacity-0 text-white text-2xl sm:text-sm px-3 font-bold placeholder-gray-800 focus:outline-hidden focus:border-blue-500 rounded-lg my-3"}>
+          <div className={"text-white text-2xl sm:text-sm px-3 font-bold placeholder-gray-800 focus:outline-hidden focus:border-blue-500 rounded-lg my-3"}>
             {this.props.node.name}
           </div>
           {/* Output dots rendering */}
