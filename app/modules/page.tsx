@@ -1,16 +1,16 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
+// import Link from "next/link";
 import ModulesTryBox from "@/components/ModulesTryBox";
 
 const Page = () => {
     // State for row 1 modules
     const [modulesRow1] = useState([
-        { name: "Generate Image", color: "bg-gray-700" },
-        { name: "Google Search", color: "bg-gray-600" },
-        { name: "Slack Manager", color: "bg-gray-700" },
-        { name: "Send Email", color: "bg-gray-600" },
+        { name: "AskWolfram", color: "bg-gray-700" },
+        { name: "Calculate", color: "bg-gray-600" },
+        { name: "Plot", color: "bg-gray-700" },
+        { name: "", color: "bg-gray-600" },
         { name: "Translate Language", color: "bg-gray-700" },
         { name: "Analyze Sentiment", color: "bg-gray-600" },
         { name: "Generate PDF", color: "bg-gray-700" },
@@ -58,7 +58,7 @@ const Page = () => {
                             </div>
 
                             {/* Navigation Items */}
-                            <ul className="ml-16 bg-[#232323] border border-[#353434] sm:rounded-full sm:h-14 sm:w-[420px] justify-center items-center flex gap-3 font-semibold rounded-lg py-1 px-2 text-base text-gray-300 hidden md:flex">
+                            {/* <ul className="ml-16 bg-[#232323] border border-[#353434] sm:rounded-full sm:h-14 sm:w-[420px] justify-center items-center flex gap-3 font-semibold rounded-lg py-1 px-2 text-base text-gray-300 hidden md:flex">
                                 <li>
                                     <Link className="py-3 sm:px-5 hover:bg-gray-700 hover:rounded-full" href="/#">
                                         Home
@@ -88,14 +88,14 @@ const Page = () => {
                                         Pricing
                                     </Link>
                                 </li>
-                            </ul>
+                            </ul> */}
 
                             {/* Get Started Button */}
                             <a
                                 href="mailto:test@gmail.com"
                                 className="hidden md:flex group inline-flex items-center justify-center py-3 px-6 text-sm font-semibold border-2 border-orange-500 rounded-full hover:bg-orange-500 hover:text-black"
                             >
-                                <button>Get Started</button>
+                                <button>Log in / Sign Up</button>
                             </a>
                         </nav>
                     </header>
@@ -103,7 +103,7 @@ const Page = () => {
                     {/* Hero Section */}
                     <div className="text-center mt-2 sm:mt-7">
                         <h1 className="mx-auto max-w-4xl font-display text-3xl font-medium tracking-tight text-white sm:text-6xl">
-                            Tangram Modules
+                            Modules
                         </h1>
                         <p className="mx-auto mt-5 text-xl max-w-2xl text-gray-300">
                             A growing set of building blocks to automate your workflows.
@@ -143,16 +143,10 @@ const Page = () => {
             </div>
 
             {/* Modules Section */}
+            
             <section className="max-w-7xl mx-auto px-4 pb-20">
-                <div className="bg-[#171717] rounded-[32px] pt-10 pb-6 mt-10">
-                    <div className="text-center">
-                        <h2 className="text-2xl text-white font-bold">Explore All Modules</h2>
-                        <p className="text-gray-400">
-                            Try em out!
-                        </p>
-                        {/* Full width rounded box with black content, white border */}
-                       <ModulesTryBox />
-                    </div>
+                <div className="bg-white rounded-[32px]">
+                    <ModulesTryBox />
                 </div>
             </section>
 

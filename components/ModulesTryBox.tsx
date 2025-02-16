@@ -35,25 +35,28 @@ const ModulesTryBox: FC = () => {
   // Sample hierarchical data: categories -> modules
   const [moduleData] = useState<CategoryItem[]>([
     {
-      name: "Images",
+      name: "Image, Audio and Video",
       children: [
-        { name: "Generate Image" },
-        { name: "Edit Image" },
-        { name: "Upscale Image" },
+        { name: "GenerateImage" },
+        { name: "UpscaleImage" },
+        { name: "UpscaleVideo" },
+        { name: "InterpolateFrames" },
+        { name: "IsolateVocals" },
+        { name: ""}
       ],
     },
     {
-      name: "Text",
+      name: "Math",
       children: [
-        { name: "Summarize Text" },
-        { name: "Translate Language" },
-        { name: "Analyze Sentiment" },
+        { name: "AskWolframAlpha" },
+        { name: "Plot" },
+        { name: "Calculate" },
       ],
     },
     {
-      name: "Documents",
+      name: "Utility",
       children: [
-        { name: "Generate PDF" },
+        { name: "ExportToPDF" },
         { name: "Combine PDFs" },
         { name: "Extract PDF Data" },
       ],
@@ -67,64 +70,66 @@ const ModulesTryBox: FC = () => {
   const filteredData = filterData(moduleData, searchTerm);
 
   return (
-    <div className="bg-black border border-white rounded-xl mt-6 mx-5 p-10 h-[600px] flex flex-col">
-      {/* 2-column layout: fill the vertical space */}
-      <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar */}
-        <div className="w-64 mr-4 bg-gray-800 rounded-lg p-4 overflow-auto text-left">
-          {/* Search box */}
-          <div className="mb-4">
-            <input
-              className="w-full p-2 rounded bg-gray-900 text-gray-200 border border-gray-700 placeholder-gray-500"
-              placeholder="Search modules..."
-              value={searchTerm}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setSearchTerm(e.target.value)
-              }
-            />
-          </div>
-
-          {/* Hierarchical list of categories & modules */}
-          {filteredData.map((category) => (
-            <div key={category.name} className="mb-4">
-              <h3 className="text-white font-bold mb-1 pl-2">{category.name}</h3>
-              {category.children.map((mod) => (
-                <div
-                  key={mod.name}
-                  className="pl-4 py-1 text-gray-300 cursor-pointer hover:text-orange-500"
-                  onClick={() => setSelectedModule(mod)}
-                >
-                  {mod.name}
+    <section className="text-center">
+        <div className="bg-black border border-white rounded-[32px] mt-6 pl-10 pb-10 pr-10 pt-6 h-[600px] flex flex-col">
+            <p className="text-gray-200 pb-4">Try them out!</p>
+            {/* 2-column layout: fill the vertical space */}
+            <div className="flex flex-1 overflow-hidden">
+                {/* Sidebar */}
+                <div className="flex flex-col pr-4">
+                    <div className="mb-4">
+                        <input className="w-full p-2 rounded text-gray-200 border border-whtie placeholder-gray-500"
+                            placeholder="Search modules..."
+                            value={searchTerm}
+                            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                                setSearchTerm(e.target.value)
+                            }
+                        />
+                    </div>
+                    <div className="w-64 bg-black rounded-lg p-4 overflow-auto text-left border">
+                        {/* Search box */}
+                        {filteredData.map((category) => (
+                            <div key={category.name} className="mb-4">
+                            <h3 className="text-white font-bold mb-1 pl-">{category.name}</h3>
+                            {category.children.map((mod) => (
+                                <div
+                                key={mod.name}
+                                className="pl-4 py-1 text-gray-300 cursor-pointer hover:text-orange-500"
+                                onClick={() => setSelectedModule(mod)}
+                                >
+                                {mod.name}
+                                </div>
+                            ))}
+                            </div>
+                        ))}
+                    </div>
                 </div>
-              ))}
-            </div>
-          ))}
-        </div>
 
-        {/* Main content area */}
-        <div className="flex-1 bg-gray-900 rounded-lg p-6 overflow-auto">
-          {selectedModule ? (
-            <div>
-              <h2 className="text-xl font-bold text-white">
-                {selectedModule.name}
-              </h2>
-              <p className="mt-3 text-sm text-gray-400">
-                This is filler content describing the &quot;{selectedModule.name}&quot; module.
-                <br />
-                In a real app, you might show parameters, usage examples, or documentation here.
-              </p>
-              <button className="mt-5 bg-orange-500 text-black px-4 py-2 rounded font-semibold hover:bg-orange-400">
-                Run Module
-              </button>
+                {/* Main content area */}
+                <div className="flex-1 bg-gray-900 rounded-lg p-6 overflow-auto">
+                {selectedModule ? (
+                    <div>
+                    <h2 className="text-xl font-bold text-white">
+                        {selectedModule.name}
+                    </h2>
+                    <p className="mt-3 text-sm text-gray-400">
+                        This is filler content describing the &quot;{selectedModule.name}&quot; module.
+                        <br />
+                        In a real app, you might show parameters, usage examples, or documentation here.
+                    </p>
+                    <button className="mt-5 bg-orange-500 text-black px-4 py-2 rounded font-semibold hover:bg-orange-400">
+                        Run Module
+                    </button>
+                    </div>
+                ) : (
+                    <p className="text-gray-500">
+                    Select a module from the sidebar to see details.
+                    </p>
+                )}
+                </div>
             </div>
-          ) : (
-            <p className="text-gray-500">
-              Select a module from the sidebar to see details.
-            </p>
-          )}
         </div>
-      </div>
-    </div>
+    </section>
   );
 };
 
