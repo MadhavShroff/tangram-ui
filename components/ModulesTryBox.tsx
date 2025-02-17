@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, ChangeEvent, FC } from "react";
+import { ExternalLink } from "lucide-react";
 
 interface ModuleItem {
   name: string;
@@ -42,7 +43,6 @@ const ModulesTryBox: FC = () => {
         { name: "UpscaleVideo" },
         { name: "InterpolateFrames" },
         { name: "IsolateVocals" },
-        { name: ""}
       ],
     },
     {
@@ -51,6 +51,8 @@ const ModulesTryBox: FC = () => {
         { name: "AskWolframAlpha" },
         { name: "Plot" },
         { name: "Calculate" },
+        { name: "De-Plot" },
+        { name: "Solve" },
       ],
     },
     {
@@ -61,6 +63,15 @@ const ModulesTryBox: FC = () => {
         { name: "Extract PDF Data" },
       ],
     },
+    {
+        name: "Language",
+        children: [
+          { name: "Translate" },
+          { name: "Summarize" },
+          { name: "ExtractEntities" },
+          { name: "AnalyzeSentiment" },
+        ],
+      },
   ]);
 
   // State for search term and currently selected module
@@ -117,8 +128,13 @@ const ModulesTryBox: FC = () => {
                         <br />
                         In a real app, you might show parameters, usage examples, or documentation here.
                     </p>
-                    <button className="mt-5 bg-orange-500 text-black px-4 py-2 rounded font-semibold hover:bg-orange-400">
-                        Run Module
+                    <button
+                      onClick={() => window.open(`/modules/${selectedModule.name}`, "_blank")}
+                      className="mt-5 bg-orange-500 text-black px-4 py-2 rounded font-semibold hover:bg-orange-400"
+                    >
+                      Try Module
+                      {/* Replace inline SVG with lucide-react icon */}
+                      <ExternalLink className="inline-block ml-2 w-4 h-4" />
                     </button>
                     </div>
                 ) : (

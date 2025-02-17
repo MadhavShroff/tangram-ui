@@ -4,12 +4,14 @@ interface TangramAnimationProps {
   scale?: number;
   xOffset?: number;
   yOffset?: number;
+  className?: string;
 }
 
 export default function TangramAnimation({
   scale = 2,
   xOffset = 0,
   yOffset = 0,
+  className = "",
 }: TangramAnimationProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -191,13 +193,13 @@ export default function TangramAnimation({
 
     // ── Tangram Arrangements ──
     const arrangementSquare = [
-      { x: 50, y: 50, rotation: -45, flipX: true, flipY: true },
-      { x: 50, y: 50, rotation: 135, flipX: true, flipY: false },
-      { x: 100, y: 100, rotation: 90, flipX: true, flipY: false },
-      { x: 50, y: 50, rotation: -135, flipX: true, flipY: true },
-      { x: 75, y: 25, rotation: -45, flipX: false, flipY: false },
-      { x: 75, y: 25, rotation: 45, flipX: false, flipY: false },
-      { x: 0, y: 100, rotation: 0, flipX: false, flipY: true },
+      { x: 70, y: 70, rotation: -45, flipX: true, flipY: true },
+      { x: 70, y: 70, rotation: 135, flipX: true, flipY: false },
+      { x: 120, y: 120, rotation: 90, flipX: true, flipY: false },
+      { x: 70, y: 70, rotation: -135, flipX: true, flipY: true },
+      { x: 95, y: 45, rotation: -45, flipX: false, flipY: false },
+      { x: 95, y: 45, rotation: 45, flipX: false, flipY: false },
+      { x: 20, y: 120, rotation: 0, flipX: false, flipY: true },
     ];
 
     const arrangementBird = [
@@ -380,8 +382,6 @@ export default function TangramAnimation({
   }, [scale, xOffset, yOffset]);
 
   return (
-    <div className="flex items-center justify-center w-screen h-screen bg-white overflow-hidden">
-      <canvas ref={canvasRef} width={800} height={600} className="bg-white" />
-    </div>
+      <canvas ref={canvasRef} width={800} height={800} className={`${className}`} />
   );
 }
