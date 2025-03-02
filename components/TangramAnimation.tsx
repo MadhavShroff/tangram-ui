@@ -31,35 +31,64 @@ export default function TangramAnimation({
     ctx.scale(dpr, dpr);
 
      // ── (Optional) Grid Drawing ──
-    // function drawGrid(
-    //     ctx: CanvasRenderingContext2D,
-    //     w: number,
-    //     h: number,
-    //     step = 50
-    //   ) {
-    //     ctx.save();
-    //     ctx.strokeStyle = "rgba(0,0,0,0.1)";
-    //     ctx.beginPath();
-    //     for (let x = 0; x <= w; x += step) {
-    //       ctx.moveTo(x, 0);
-    //       ctx.lineTo(x, h);
-    //     }
-    //     for (let y = 0; y <= h; y += step) {
-    //       ctx.moveTo(0, y);
-    //       ctx.lineTo(w, y);
-    //     }
-    //     ctx.stroke();
-  
-    //     ctx.fillStyle = "rgba(0,0,0,0.6)";
-    //     ctx.font = "10px sans-serif";
-    //     for (let x = 0; x <= w; x += step) {
-    //       ctx.fillText(`${x}`, x + 2, 10);
-    //     }
-    //     for (let y = 0; y <= h; y += step) {
-    //       ctx.fillText(`${y}`, 2, y - 2);
-    //     }
-    //     ctx.restore();
-    // }
+     function drawGrid(
+      ctx: CanvasRenderingContext2D,
+      w: number,
+      h: number,
+      step = 50,
+      subdivisions = 5 // Number of subdivisions between main grid lines
+    ) {
+      ctx.save();
+      
+      // Draw main grid lines
+      ctx.strokeStyle = "rgba(0,0,0,0.1)";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (let x = 0; x <= w; x += step) {
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, h);
+      }
+      for (let y = 0; y <= h; y += step) {
+        ctx.moveTo(0, y);
+        ctx.lineTo(w, y);
+      }
+      ctx.stroke();
+      
+      // Draw subdivision grid lines
+      ctx.strokeStyle = "rgba(0,0,0,0.05)";
+      ctx.lineWidth = 0.5;
+      ctx.beginPath();
+      
+      const subStep = step / subdivisions;
+      
+      for (let x = 0; x <= w; x += subStep) {
+        // Skip if this is a main grid line
+        if (x % step === 0) continue;
+        
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, h);
+      }
+      
+      for (let y = 0; y <= h; y += subStep) {
+        // Skip if this is a main grid line
+        if (y % step === 0) continue;
+        
+        ctx.moveTo(0, y);
+        ctx.lineTo(w, y);
+      }
+      ctx.stroke();
+    
+      // Draw coordinates for main grid lines
+      ctx.fillStyle = "rgba(0,0,0,0.6)";
+      ctx.font = "10px sans-serif";
+      for (let x = 0; x <= w; x += step) {
+        ctx.fillText(`${x}`, x + 2, 10);
+      }
+      for (let y = 0; y <= h; y += step) {
+        ctx.fillText(`${y}`, 2, y - 2);
+      }
+      ctx.restore();
+    }
 
     // ── Cubic Bezier Easing Function ──
     function cubicBezier(p1x: number, p1y: number, p2x: number, p2y: number) {
@@ -172,7 +201,7 @@ export default function TangramAnimation({
       },
     ];
 
-    // ── Each piece’s state includes flipX/flipY plus “currentScaleX/scaleY” ──
+    // ── Each piece's state includes flipX/flipY plus "currentScaleX/scaleY" ──
     const piecesState = tangramPieces.map(() => ({
       x: Math.random() * width,
       y: Math.random() * height,
@@ -193,24 +222,41 @@ export default function TangramAnimation({
 
     // ── Tangram Arrangements ──
     const arrangementSquare = [
-      { x: 70, y: 70, rotation: -45, flipX: true, flipY: true },
-      { x: 70, y: 70, rotation: 135, flipX: true, flipY: false },
-      { x: 120, y: 120, rotation: 90, flipX: true, flipY: false },
-      { x: 70, y: 70, rotation: -135, flipX: true, flipY: true },
-      { x: 95, y: 45, rotation: -45, flipX: false, flipY: false },
-      { x: 95, y: 45, rotation: 45, flipX: false, flipY: false },
-      { x: 20, y: 120, rotation: 0, flipX: false, flipY: true },
+      { x: 100, y: 70, rotation: -45, flipX: true, flipY: true },
+      { x: 100, y: 70, rotation: 135, flipX: true, flipY: false },
+      { x: 150, y: 120, rotation: 90, flipX: true, flipY: false },
+      { x: 100, y: 70, rotation: -135, flipX: true, flipY: true },
+      { x: 125, y: 45, rotation: -45, flipX: false, flipY: false },
+      { x: 125, y: 45, rotation: 45, flipX: false, flipY: false },
+      { x: 50, y: 120, rotation: 0, flipX: false, flipY: true },
     ];
 
     const arrangementBird = [
-      { x: 110, y: 4.5, rotation: 0, flipX: false, flipY: false },
-      { x: 110, y: 75, rotation: 0, flipX: true, flipY: true },
-      { x: 75, y: 40, rotation: 45, flipX: true, flipY: false },
-      { x: 40, y: 40, rotation: 180, flipX: false, flipY: false },
-      { x: 75, y: 75, rotation: 0, flipX: true, flipY: false },
-      { x: 75, y: 75, rotation: 0, flipX: false, flipY: false },
-      { x: 146, y: 146, rotation: 45, flipX: true, flipY: false },
+      { x: 140, y: 4.5, rotation: 0, flipX: false, flipY: false },
+      { x: 140, y: 75, rotation: 0, flipX: true, flipY: true },
+      { x: 105, y: 40, rotation: 45, flipX: true, flipY: false },
+      { x: 70, y: 40, rotation: 180, flipX: false, flipY: false },
+      { x: 105, y: 75, rotation: 0, flipX: true, flipY: false },
+      { x: 105, y: 75, rotation: 0, flipX: false, flipY: false },
+      { x: 176, y: 146, rotation: 45, flipX: true, flipY: false },
     ];
+    
+    const arrangementCamel = [
+        { x: 135, y: 105, rotation: -45, flipX: true, flipY: true },
+        { x: 180, y: 80, rotation: 180, flipX: false, flipY: true },
+        { x: 145, y: 45, rotation: -135, flipX: true, flipY: true },
+        { x: 60, y: 30, rotation: -45, flipX: false, flipY: false },
+        { x: 60, y: 30, rotation: 45+180, flipX: false, flipY: false },
+        { x: 110, y: 30, rotation: 45, flipX: false, flipY: false },
+        { x: 60, y: 30, rotation: 90, flipX: false, flipY: true },
+    ];
+    // ── Helper function to transform arrangements ──
+    const mapArrangementX = (arrangement: {x: number, y: number, rotation: number, flipX: boolean, flipY: boolean}[], transformX: (x: number) => number) => {
+        return arrangement.map(piece => ({
+            ...piece,
+            x: transformX(piece.x)
+        }));
+    };
 
     const arrangementMountain = [
         { x: 75, y: 100, rotation: 0, flipX: true, flipY: true },
@@ -220,20 +266,15 @@ export default function TangramAnimation({
         { x: 110.5, y: 100, rotation: 180, flipX: true, flipY: false },
         { x: 110, y: 14.5, rotation: 45, flipX: false, flipY: false },
         { x: 110.5, y: 100, rotation: 45, flipX: true, flipY: true },
-    ];
-  
-    const arrangementCamel = [
-        { x: 105, y: 105, rotation: -45, flipX: true, flipY: true },
-        { x: 150, y: 80, rotation: 180, flipX: false, flipY: true },
-        { x: 115, y: 45, rotation: -135, flipX: true, flipY: true },
-        { x: 30, y: 30, rotation: -45, flipX: false, flipY: false },
-        { x: 30, y: 30, rotation: 45+180, flipX: false, flipY: false },
-        { x: 80, y: 30, rotation: 45, flipX: false, flipY: false },
-        { x: 30, y: 30, rotation: 90, flipX: false, flipY: true },
-    ];
+    ]; // Example: adding 30 to each x value
 
     // For demonstration, just two shapes
-    const shapes = [arrangementSquare, arrangementCamel, arrangementBird, arrangementMountain, arrangementCamel];
+    const shapes = [ 
+      mapArrangementX(arrangementSquare, x => x + 25),
+      mapArrangementX(arrangementMountain, x => x + 15.5), 
+      mapArrangementX(arrangementCamel, x => x + 15.5),
+      arrangementBird
+    ];
     let currentShapeIndex = 0;
 
     function setTargetsToArrangement(arr: {x: number, y: number, rotation: number, flipX: boolean, flipY: boolean}[]) {
@@ -364,7 +405,7 @@ export default function TangramAnimation({
     function loop() {
         if (!ctx) return;
       ctx.clearRect(0, 0, width, height);
-    //   drawGrid(ctx, width, height, 50);
+      drawGrid(ctx, width, height, 50);
       update();
 
       // Draw every piece in the new positions

@@ -13,10 +13,7 @@ const TestPage = () => {
         prompt: "Tell me about the Uffitzi Gallery in Florence.",
         nodes: [
             {
-                id: "1",
-                color: "#fdba74",
-                name: "Generate Search Queries",
-                level: 0,
+                id: "1", color: "#fdba74", name: "Generate Search Queries", level: 0,
                 inputs: [
                     {
                         number: 1,
@@ -159,11 +156,13 @@ const TestPage = () => {
   }, [followUp]);
 
   return (
-    <div className="bg-black min-h-screen flex flex-col p-2 gap-2 relative">
+    <div className="bg-black min-h-screen flex flex-col relative">
       {/* Main content area */}
-      <div className="flex-1 border-2 border-[#f2f2f2] rounded-xl mb-2">
-        <ContextBox contextItems={contextItems} />
-        <GraphView graph={graph} />
+      <div className="w-full px-2 py-2 max-w-[1400px] mx-auto">
+        <div className="flex-1 border-2 border-[#f2f2f2] rounded-xl mb-2">
+          <ContextBox contextItems={contextItems} />
+          <GraphView graph={graph} />
+        </div>
       </div>
 
       {/* Fixed textarea at bottom center */}
@@ -174,20 +173,7 @@ const TestPage = () => {
           onChange={(e) => setFollowUp(e.target.value)}
           placeholder="Ask a follow up..."
           rows={1}
-          className="
-            w-full
-            bg-transparent
-            text-white
-            text-xl
-            font-bold
-            px-3
-            pt-[1px]
-            rounded-lg
-            focus:outline-none
-            placeholder-gray-500
-            resize-none
-            overflow-hidden
-          "
+          className="w-full bg-transparent text-white text-xl font-bold px-3 pt-[1px] rounded-lg focus:outline-none placeholder-gray-500 resize-none overflow-hidden"
         />
         <div className="rounded-full border-orange-500 border-2 hover:bg-orange-500 h-[40px] w-[44px] flex items-center justify-center group">
             <ArrowRight className="text-white group-hover:text-black" />

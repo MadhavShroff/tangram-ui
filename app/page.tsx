@@ -1,1086 +1,870 @@
 "use client";
-// Home.jsx
-import React, { useEffect } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { 
+  ArrowRight, 
+  ChevronRight, 
+  Zap, 
+  Puzzle, 
+  Brain, 
+  CreditCard, 
+  LayoutGrid,
+  Database, 
+  Workflow,
+  Boxes,
+  Grid3X3,
+  Bot,
+  CheckCircle2,
+  Settings,
+  Lock,
+  CornerRightDown
+} from "lucide-react";
+import TangramAnimation from "@/components/TangramAnimation";
 
-const Home = () => {
+const LandingPage = () => {
+  const [scrolled, setScrolled] = useState(false);
+  const [activeBlock, setActiveBlock] = useState('input');
+  const [email, setEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
+
   useEffect(() => {
-    // fetchUser(setUser);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+    if (email && email.includes('@')) {
+      // In a real implementation, you would send this to your backend
+      console.log('Subscribed email:', email);
+      setSubscribed(true);
+      setEmail('');
+      setTimeout(() => setSubscribed(false), 3000);
+    }
+  };
+
   return (
-    // Full-page dark background:
-    <main className="min-h-screen w-full bg-black text-gray-300">
-      <LandingPage />
-    </main>
-  );
-};
-
-export default Home;
-
-function LandingPage() {
-  return (
-    <main className="max-w-7xl mx-auto px-4 py-5">
-      {/* Dark Section (Hero) */}
-      <div className="bg-[#171717] rounded-[32px]">
-        {/* Header */}
-        <header className="sm:p-10 sm:px-12 px-7 py-10">
-          <nav className="flex items-center justify-between">
-            {/* Logo */}
-            <div className='flex flex-row items-center gap-2'>
-              <span className='text-2xl'>tangram.ai</span>
-              <Image
-                alt="logo"
-                width={30}
-                height={30}
-                src="/tangram_logo.png"
-                className=""
-              />
-            </div>
-
-            {/* Navigation Items */}
-            <ul className="ml-16 bg-[#232323] border border-[#353434] sm:rounded-full sm:h-14 sm:w-[420px] justify-center items-center flex gap-3 font-semibold rounded-lg py-1 px-2 text-base text-gray-300 hidden md:flex">
-              <li>
-                <Link className="py-3 sm:px-5 hover:bg-gray-700 hover:rounded-full" href="/#">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link className="py-3 sm:px-5 hover:bg-gray-700 hover:rounded-full" href="/#about">
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link className="py-3 sm:px-5 hover:bg-gray-700 hover:rounded-full" href="/#feature">
-                  Features
-                </Link>
-              </li>
-              <li>
-                <Link className="py-3 sm:px-5 hover:bg-gray-700 hover:rounded-full" href="/#pricing">
-                  Pricing
-                </Link>
-              </li>
-            </ul>
-
-            {/* Get Started Button */}
-            <a
-              href="mailto:test@gmail.com"
-              className="hidden md:flex group inline-flex items-center justify-center py-3 px-6 text-sm font-semibold border-2 border-orange-500 rounded-full hover:bg-orange-500 hover:text-black"
-            >
-              <button>Get Started</button>
-            </a>
-          </nav>
-        </header>
-
-        {/* Hero Section */}
-        <div className="text-center mt-10 sm:mt-7">
-          <div className="flex flex-col gap-8">
-            <div className="bg-[#232323] border border-[#353434] py-1 px-3 rounded-full w-fit mx-auto flex justify-center items-center gap-2">
-              <div className="flex justify-center -space-x-4">
-                <Image
-                  alt="Profile 1"
-                  loading="lazy"
-                  width={35}
-                  height={35}
-                  className="w-[35px] h-[35px] object-cover rounded-full border-2 border-black"
-                  src="https://saasta.buildwithiqra.com/lucas.jpg"
-                />
-                <Image
-                  alt="Profile 2"
-                  loading="lazy"
-                  width={35}
-                  height={35}
-                  className="w-[35px] h-[35px] object-cover rounded-full border-2 border-black"
-                  src="https://saasta.buildwithiqra.com/juno.jpg"
-                />
-                <Image
-                  alt="Profile 3"
-                  loading="lazy"
-                  width={35}
-                  height={35}
-                  className="w-[35px] h-[35px] object-cover rounded-full border-2 border-black"
-                  src="https://saasta.buildwithiqra.com/s.jpg"
-                />
-              </div>
-              <div className="flex flex-col">
-                <p className="text-base font-medium">Join 4000+ Members</p>
-              </div>
-            </div>
+    <div className="min-h-screen bg-black text-white flex flex-col">
+      {/* Header */}
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled ? "bg-black/80 backdrop-blur-md py-3" : "bg-transparent py-5"
+      }`}>
+        <div className="container mx-auto px-4 flex justify-between items-center">
+          <div className="flex items-center gap-2">
+            <Link href="/" className="text-2xl font-medium">tangram.ai</Link>
+            <Image
+              src="/tangram_logo.png"
+              alt="Tangram Logo"
+              width={30}
+              height={30}
+              className="transition-transform duration-300 hover:rotate-45"
+            />
           </div>
+          
+          <nav className="hidden md:flex items-center space-x-1">
+            <div className="bg-zinc-900 border border-zinc-800 rounded-full px-2 py-1">
+              <a href="#features" className="text-sm px-4 py-2 text-gray-300 hover:text-white transition-colors rounded-full hover:bg-zinc-800">Features</a>
+              <a href="#blocks" className="text-sm px-4 py-2 text-gray-300 hover:text-white transition-colors rounded-full hover:bg-zinc-800">Blocks</a>
+              <a href="#use-cases" className="text-sm px-4 py-2 text-gray-300 hover:text-white transition-colors rounded-full hover:bg-zinc-800">Use Cases</a>
+              <a href="#pricing" className="text-sm px-4 py-2 text-gray-300 hover:text-white transition-colors rounded-full hover:bg-zinc-800">Pricing</a>
+            </div>
+          </nav>
+          
+          <div className="flex items-center">
+            <a 
+              href="#notify" 
+              className="border-2 border-orange-500 hover:bg-orange-500 hover:text-black text-white text-sm font-medium rounded-full px-5 py-2 transition-all duration-300"
+            >
+              Get Notified
+            </a>
+          </div>
+        </div>
+      </header>
 
-          <h1 className="mt-5 mx-auto max-w-4xl font-display text-3xl font-medium tracking-tight text-white sm:text-6xl">
-            Build and Scale Your SaaS Without Limits
-          </h1>
-          <div className="mx-auto space-y-4 mt-5 text-xl max-w-2xl text-gray-300">
-            <p>
-              Create professional, high-performing SaaS platforms in record time without writing a
-              single line of code.
+      {/* Hero Section */}
+      <section className="pt-16 pb-16 md:pt-24 md:pb-24 container mx-auto px-4 flex flex-col items-center">
+        {/* <div className="inline-flex items-center bg-zinc-900/80 border border-zinc-800 rounded-full px-4 py-1.5 mb-8 text-sm">
+          <span className="bg-orange-500 h-2 w-2 rounded-full mr-2"></span>
+          <span>Coming Soon</span>
+          <ChevronRight className="ml-1 w-4 h-4" />
+        </div> */}
+        
+        <div className="w-[700px] h-90 mb-32 md:mb-24 sm:mb-10 mt-32 md:mt-20 sm:mt-10 items-center">
+          <TangramAnimation scale={2.8}/>
+        </div>
+        
+        <h1 className="text-4xl md:text-6xl lg:text-7xl font-medium text-center leading-tight mb-6 z-10">
+           tangram.ai
+        </h1>
+        
+        <p className="text-xl md:text-2xl text-gray-300 text-center max-w-3xl mb-6">
+          Legos, but for work. Generate workflows with Modular blocks.
+        </p>
+        
+        <p className="text-md text-gray-400 text-center max-w-xl mb-12">
+          Build intelligent workflows block by block. Or generate them on the fly. 
+        </p>
+        
+        <div id="notify" className="w-full max-w-md mx-auto">
+          <form onSubmit={handleSubscribe} className="relative">
+            <input
+              type="email"
+              placeholder="Enter your email for updates"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full bg-zinc-900 border border-zinc-700 rounded-full px-6 py-3 pr-36 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+              required
+            />
+            <button
+              type="submit"
+              className="absolute right-1.5 top-1.5 bg-orange-500 hover:bg-orange-600 text-black font-medium rounded-full px-4 py-1.5 transition-all duration-200"
+            >
+              Get Notified
+            </button>
+          </form>
+          {subscribed && (
+            <p className="text-center text-green-400 mt-2 text-sm">
+              Thanks! We&apos;ll notify you when we launch.
+            </p>
+          )}
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="container mx-auto px-4 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+          <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6 flex flex-col items-center text-center">
+            <div className="w-12 h-12 rounded-xl bg-orange-500/20 flex items-center justify-center mb-4">
+              <LayoutGrid className="w-6 h-6 text-orange-400" />
+            </div>
+            <h3 className="text-xl font-medium mb-2">1. Drag</h3>
+            <p className="text-gray-400">
+              Select the blocks you need from our extensive library.
             </p>
           </div>
-
-          <Link href="/#contact">
-            <button className="mt-5 bg-orange-500 hover:text-white text-black font-medium text-base h-11 py-3 px-2 pr-5 rounded-full inline-flex items-center justify-center gap-2">
-              <span className="bg-black p-2 rounded-full">
-                <Image
-                  alt="arrow"
-                  loading="lazy"
-                  width={20}
-                  height={20}
-                  src="https://saasta.buildwithiqra.com/arrow.svg"
-                />
-              </span>
-              Start today for FREE
-            </button>
-          </Link>
-
-          <p className="text-gray-400 text-sm mt-2 pb-20">No credit card required.</p>
+          
+          <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6 flex flex-col items-center text-center">
+            <div className="w-12 h-12 rounded-xl bg-orange-500/20 flex items-center justify-center mb-4">
+              <Workflow className="w-6 h-6 text-orange-400" />
+            </div>
+            <h3 className="text-xl font-medium mb-2">2. Connect</h3>
+            <p className="text-gray-400">
+              Link blocks together to define your workflow pattern.
+            </p>
+          </div>
+          
+          <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6 flex flex-col items-center text-center">
+            <div className="w-12 h-12 rounded-xl bg-orange-500/20 flex items-center justify-center mb-4">
+              <Zap className="w-6 h-6 text-orange-400" />
+            </div>
+            <h3 className="text-xl font-medium mb-2">3. Run</h3>
+            <p className="text-gray-400">
+              Set it live and watch Tangram handle everything automatically.
+            </p>
+          </div>
         </div>
-      </div>
+      </section>
 
-      {/* About Section */}
-      <div id="about" className="bg-white p-5 sm:p-14 text-black mt-10 min-h-[500px] rounded-[32px]">
-        <div className="grid grid-cols-1 gap-10 sm:gap-32">
-          {/* Row 1 */}
-          <div className="mt-7 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12">
-            {/* Image */}
-            <div className="w-full">
-              <Image
-                alt="About"
-                loading="lazy"
-                width={1000}
-                height={600}
-                className="w-full min-h-[250px] sm:min-h-[390px] max-h-screen object-cover rounded-2xl"
-                src="https://saasta.buildwithiqra.com/about.jpg"
-              />
-            </div>
-            {/* Text + Feature List */}
-            <div className="w-full flex flex-col justify-between">
-              <div>
-                <h2 className="mb-5 font-display text-3xl tracking-tight sm:leading-[50px] text-left max-w-[60%] sm:max-w-[50%] sm:text-[42px]">
-                  Simplify Your SaaS Creation
-                </h2>
-                <p className="text-gray-600">
-                  Launchly equips you with the tools to create, operate, and grow your SaaS platform
-                  effortlessly. Whether you’re a solopreneur or a growing startup, we’ve got you
-                  covered.
-                </p>
+      {/* AI Powered Section */}
+      <section className="container mx-auto px-4 py-16">
+        <div className="bg-gradient-to-br from-zinc-900 to-zinc-950 rounded-3xl p-12 border border-zinc-800">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+              <div className="inline-flex items-center bg-zinc-800/80 border border-zinc-700 rounded-full px-4 py-1.5 mb-6 text-sm">
+                <span className="bg-orange-500 h-2 w-2 rounded-full mr-2"></span>
+                <span>AI Does the Heavy Lifting</span>
               </div>
-              <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div className="flex flex-col gap-2 border border-gray-200 p-5 rounded-lg">
-                  <span className="bg-orange-500 w-fit p-1.5 rounded-full">
-                    <Image
-                      alt="Vinkje"
-                      loading="lazy"
-                      width={15}
-                      height={15}
-                      className="filter invert"
-                      src="https://saasta.buildwithiqra.com/vinkje.svg"
-                    />
-                  </span>
-                  <h3 className="text-xl">No Code</h3>
-                  <p className="text-sm text-gray-700">
-                    Create websites effortlessly, all without the need for any coding.
-                  </p>
-                </div>
-
-                <div className="flex flex-col gap-2 border border-gray-200 p-5 rounded-lg">
-                  <span className="bg-orange-500 w-fit p-1.5 rounded-full">
-                    <Image
-                      alt="Vinkje"
-                      loading="lazy"
-                      width={15}
-                      height={15}
-                      className="filter invert"
-                      src="https://saasta.buildwithiqra.com/vinkje.svg"
-                    />
-                  </span>
-                  <h3 className="text-xl">Robust Performance</h3>
-                  <p className="text-sm text-gray-700">
-                    Enjoy lightning-fast speed and reliable uptime.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Row 2 */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12">
-            {/* Text + Feature List */}
-            <div className="w-full flex flex-col justify-between">
-              <h2 className="mb-5 font-display text-3xl tracking-tight sm:leading-[50px] text-left max-w-[70%] sm:max-w-[70%] sm:text-[42px]">
-                Redefining SaaS Development
-              </h2>
-              <p className="text-gray-600">
-                Platformly empowers non-technical founders and developers alike to create dynamic
-                SaaS platforms. Take control with powerful, easy-to-use tools.
+              <h2 className="text-3xl md:text-4xl font-medium mb-6">Define Once, Automate Forever</h2>
+              <p className="text-gray-400 mb-8">
+                Each block contains intelligent automation that adapts to your data and learns from your processes. 
+                Define your workflow once, then let AI take over the repetitive tasks.
               </p>
-              <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div className="flex flex-col gap-2 border border-gray-200 p-5 rounded-lg">
-                  <span className="bg-orange-500 w-fit p-1.5 rounded-full">
-                    <Image
-                      alt="Vinkje"
-                      loading="lazy"
-                      width={15}
-                      height={15}
-                      src="https://saasta.buildwithiqra.com/vinkje.svg"
-                    />
-                  </span>
-                  <h3 className="text-xl">Drag &amp; Drop Interface</h3>
-                  <p className="text-sm text-gray-700">
-                    Create stunning SaaS solutions without writing code.
-                  </p>
+              
+              <div className="grid grid-cols-1 gap-4">
+                <div className="bg-zinc-800/50 rounded-xl p-4 border border-zinc-700">
+                  <div className="w-8 h-8 rounded-lg bg-orange-500/20 flex items-center justify-center mb-3">
+                    <Brain className="w-4 h-4 text-orange-400" />
+                  </div>
+                  <h3 className="font-medium mb-1">AI-Powered Execution</h3>
+                  <p className="text-sm text-gray-400">Each block contains intelligent automation that adapts to your data.</p>
                 </div>
-
-                <div className="flex flex-col gap-2 border border-gray-200 p-5 rounded-lg">
-                  <span className="bg-orange-500 w-fit p-1.5 rounded-full">
-                    <Image
-                      alt="Vinkje"
-                      loading="lazy"
-                      width={15}
-                      height={15}
-                      src="https://saasta.buildwithiqra.com/vinkje.svg"
-                    />
-                  </span>
-                  <h3 className="text-xl">Integrated Payments</h3>
-                  <p className="text-sm text-gray-700">
-                    Accept payments seamlessly via Stripe, PayPal, and more.
-                  </p>
+                
+                <div className="bg-zinc-800/50 rounded-xl p-4 border border-zinc-700">
+                  <div className="w-8 h-8 rounded-lg bg-orange-500/20 flex items-center justify-center mb-3">
+                    <Bot className="w-4 h-4 text-orange-400" />
+                  </div>
+                  <h3 className="font-medium mb-1">Continuous Learning</h3>
+                  <p className="text-sm text-gray-400">Workflows get smarter over time as they process more data.</p>
                 </div>
               </div>
             </div>
-            {/* Image */}
-            <div className="w-full">
-              <Image
-                alt="About"
-                loading="lazy"
-                width={1000}
-                height={600}
-                className="w-full min-h-[250px] sm:min-h-[390px] max-h-screen object-cover rounded-2xl"
-                src="https://saasta.buildwithiqra.com/about2.jpg"
-              />
-            </div>
-          </div>
-
-          {/* Row 3 */}
-          <div className="mt-7 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12">
-            {/* Image (goes first on mobile) */}
-            <div className="w-full order-2 sm:order-1">
-              <Image
-                alt="About"
-                loading="lazy"
-                width={1000}
-                height={600}
-                className="w-full min-h-[250px] sm:min-h-[390px] max-h-screen object-cover rounded-2xl"
-                src="https://saasta.buildwithiqra.com/about3.jpg"
-              />
-            </div>
-            {/* Text + Feature List (goes second on mobile) */}
-            <div className="w-full flex flex-col justify-between order-1 sm:order-2">
-              <h2 className="mb-5 font-display text-3xl tracking-tight sm:leading-[50px] text-left max-w-[60%] sm:max-w-[50%] sm:text-[42px]">
-                Elevate Your SaaS Journey
-              </h2>
-              <p className="text-gray-600">
-                From idea to execution, ElevateX simplifies every stage of building your SaaS. Launch
-                with confidence, knowing you have all the tools you need.
-              </p>
-              <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div className="flex flex-col gap-2 border border-gray-200 p-5 rounded-lg">
-                  <span className="bg-orange-500 w-fit p-1.5 rounded-full">
-                    <Image
-                      alt="Vinkje"
-                      loading="lazy"
-                      width={15}
-                      height={15}
-                      src="https://saasta.buildwithiqra.com/vinkje.svg"
-                    />
-                  </span>
-                  <h3 className="text-xl">Cloud-Optimized</h3>
-                  <p className="text-sm text-gray-700">
-                    Your SaaS is powered by enterprise-grade infrastructure.
-                  </p>
+            
+            <div className="relative">
+              <div className="rounded-xl overflow-hidden bg-zinc-800 p-4">
+                <div className="grid grid-cols-3 gap-3">
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => (
+                    <div 
+                      key={item} 
+                      className={`aspect-square rounded-lg flex items-center justify-center ${
+                        item % 2 === 0 ? 'bg-zinc-700' : 'bg-zinc-900'
+                      }`}
+                    >
+                      <div className="w-6 h-6 rounded-full bg-orange-500/30 flex items-center justify-center">
+                        <Brain className="w-3 h-3 text-orange-400" />
+                      </div>
+                    </div>
+                  ))}
                 </div>
-                <div className="flex flex-col gap-2 border border-gray-200 p-5 rounded-lg">
-                  <span className="bg-orange-500 w-fit p-1.5 rounded-full">
-                    <Image
-                      alt="Vinkje"
-                      loading="lazy"
-                      width={15}
-                      height={15}
-                      src="https://saasta.buildwithiqra.com/vinkje.svg"
-                    />
-                  </span>
-                  <h3 className="text-xl">Analytics available</h3>
-                  <p className="text-sm text-gray-700">
-                    Gain valuable insights to grow smarter and faster.
-                  </p>
+                <div className="mt-4 flex justify-center">
+                  <div className="bg-zinc-900 rounded-lg py-1.5 px-4 flex items-center gap-2">
+                    <span className="animate-pulse w-2 h-2 rounded-full bg-green-500"></span>
+                    <span className="text-sm text-gray-300">AI Processing...</span>
+                  </div>
+                </div>
+              </div>
+              <div className="absolute -bottom-6 -right-6 bg-zinc-800 rounded-xl p-4 border border-zinc-700 shadow-xl">
+                <div className="flex items-center">
+                  <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center">
+                    <Zap className="w-5 h-5 text-black" />
+                  </div>
+                  <div className="ml-3">
+                    <p className="text-sm font-medium">Automatic Execution</p>
+                    <p className="text-xs text-gray-400">No manual intervention needed</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Features Section */}
-      <div
-        id="feature"
-        className="bg-white pt-10 px-5 sm:p-14 text-black mt-10 min-h-[500px] rounded-[32px]"
-      >
-        <span className="flex mx-auto gap-2 bg-orange-500 text-black w-fit p-1 px-3 rounded-full">
-          <Image
-            loading="lazy"
-            width={20}
-            height={20}
-            src="https://saasta.buildwithiqra.com/feature.svg"
-            alt="Feature Icon"
-          />
-          Key features
-        </span>
-        <h2 className="mb-5 text-center font-display text-3xl tracking-tight sm:leading-[50px] mx-auto mt-5 max-w-[70%] sm:max-w-[70%] sm:text-[42px]">
-          Explore our key features
-        </h2>
-        <p className="text-center text-gray-600 w-full sm:max-w-[60%] mx-auto">
-          Discover the core functionalities that make SAP the ultimate solution for efficient
-          project management.
+      <section id="features" className="container mx-auto px-4 py-24">
+        <h2 className="text-3xl font-medium text-center mb-2">Key Features</h2>
+        <p className="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+          Discover why Tangram.ai is the ultimate solution for building modular AI-powered workflows.
         </p>
-
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3">
-          {/* Feature Cards */}
-          <div className="flex flex-col rounded-lg gap-2 p-7 bg-gray-100 border border-gray-300">
-            <span className="bg-orange-500 p-2 rounded-lg w-fit">
-              <Image
-                loading="lazy"
-                width={30}
-                height={30}
-                src="https://saasta.buildwithiqra.com/task.svg"
-                alt="Task Icon"
-              />
-            </span>
-            <h3 className="mt-3 text-base font-medium">Efficient Task Tracking</h3>
-            <p className="text-gray-700">Streamline task monitoring for productivity.</p>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-8 transition-all duration-300 hover:border-zinc-700 hover:translate-y-[-5px]">
+            <div className="w-12 h-12 rounded-xl bg-orange-500/20 flex items-center justify-center mb-6">
+              <Puzzle className="w-6 h-6 text-orange-400" />
+            </div>
+            <h3 className="text-xl font-medium mb-3">Modular Design</h3>
+            <p className="text-gray-400">
+              Snap together pre-built blocks to create custom workflows, without writing code.
+            </p>
           </div>
-
-          <div className="flex flex-col rounded-lg gap-2 p-7 bg-gray-100 border border-gray-300">
-            <span className="bg-orange-500 p-2 rounded-lg w-fit">
-              <Image
-                loading="lazy"
-                width={30}
-                height={30}
-                src="https://saasta.buildwithiqra.com/message.svg"
-                alt="Message Icon"
-              />
-            </span>
-            <h3 className="mt-3 text-base font-medium">Smooth Communication</h3>
-            <p className="text-gray-700">Enhance team collaboration with messaging.</p>
+          
+          <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-8 transition-all duration-300 hover:border-zinc-700 hover:translate-y-[-5px]">
+            <div className="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center mb-6">
+              <Brain className="w-6 h-6 text-emerald-400" />
+            </div>
+            <h3 className="text-xl font-medium mb-3">AI-Powered Blocks</h3>
+            <p className="text-gray-400">
+              Leverage AI Blocks in automations to enable autonous decision making and content generation.
+            </p>
           </div>
-
-          <div className="flex flex-col rounded-lg gap-2 p-7 bg-gray-100 border border-gray-300">
-            <span className="bg-orange-500 p-2 rounded-lg w-fit">
-              <Image
-                loading="lazy"
-                width={30}
-                height={30}
-                src="https://saasta.buildwithiqra.com/reminder.svg"
-                alt="Reminder Icon"
-              />
-            </span>
-            <h3 className="mt-3 text-base font-medium">Automated Reminders</h3>
-            <p className="text-gray-700">Never miss a deadline with automated reminders.</p>
+          
+          <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-8 transition-all duration-300 hover:border-zinc-700 hover:translate-y-[-5px]">
+            <div className="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center mb-6">
+              <Grid3X3 className="w-6 h-6 text-blue-400" />
+            </div>
+            <h3 className="text-xl font-medium mb-3">No-Code Building</h3>
+            <p className="text-gray-400">
+              Taking a game design approach to functional software. Zero programming needed to create powerful workflows.
+            </p>
           </div>
-
-          <div className="flex flex-col rounded-lg gap-2 p-7 bg-gray-100 border border-gray-300">
-            <span className="bg-orange-500 p-2 rounded-lg w-fit">
-              <Image
-                loading="lazy"
-                width={30}
-                height={30}
-                src="https://saasta.buildwithiqra.com/data.svg"
-                alt="Data Icon"
-              />
-            </span>
-            <h3 className="mt-3 text-base font-medium">Simple Data Syncing</h3>
-            <p className="text-gray-700">Sync data effortlessly across platforms.</p>
+          
+          <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-8 transition-all duration-300 hover:border-zinc-700 hover:translate-y-[-5px]">
+            <div className="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center mb-6">
+              <Database className="w-6 h-6 text-purple-400" />
+            </div>
+            <h3 className="text-xl font-medium mb-3">Unlimited Connections</h3>
+            <p className="text-gray-400">
+              Link to your existing tools and data sources seamlessly for a truly integrated workflow.
+            </p>
           </div>
-
-          <div className="flex flex-col rounded-lg gap-2 p-7 bg-gray-100 border border-gray-300">
-            <span className="bg-orange-500 p-2 rounded-lg w-fit">
-              <Image
-                loading="lazy"
-                width={30}
-                height={30}
-                src="https://saasta.buildwithiqra.com/management.svg"
-                alt="Management Icon"
-              />
-            </span>
-            <h3 className="mt-3 text-base font-medium">Member Management</h3>
-            <p className="text-gray-700">Effortlessly manage team members roles.</p>
+          
+          <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-8 transition-all duration-300 hover:border-zinc-700 hover:translate-y-[-5px]">
+            <div className="w-12 h-12 rounded-xl bg-red-500/20 flex items-center justify-center mb-6">
+              <Settings className="w-6 h-6 text-red-400" />
+            </div>
+            <h3 className="text-xl font-medium mb-3">Custom Configuration</h3>
+            <p className="text-gray-400">
+              Tailor each block to your exact needs with flexible parameters and settings.
+            </p>
           </div>
-
-          <div className="flex flex-col rounded-lg gap-2 p-7 bg-gray-100 border border-gray-300">
-            <span className="bg-orange-500 p-2 rounded-lg w-fit">
-              <Image
-                loading="lazy"
-                width={30}
-                height={30}
-                src="https://saasta.buildwithiqra.com/deadline.svg"
-                alt="Deadline Icon"
-              />
-            </span>
-            <h3 className="mt-3 text-base font-medium">Deadline Tracking</h3>
-            <p className="text-gray-700">Stay on schedule with clear deadlines.</p>
-          </div>
-
-          <div className="flex flex-col rounded-lg gap-2 p-7 bg-gray-100 border border-gray-300">
-            <span className="bg-orange-500 p-2 rounded-lg w-fit">
-              <Image
-                loading="lazy"
-                width={30}
-                height={30}
-                src="https://saasta.buildwithiqra.com/intergration.svg"
-                alt="Integration Icon"
-              />
-            </span>
-            <h3 className="mt-3 text-base font-medium">Seamless Integrations</h3>
-            <p className="text-gray-700">Integrate with existing tools seamlessly.</p>
-          </div>
-
-          <div className="flex flex-col rounded-lg gap-2 p-7 bg-gray-100 border border-gray-300">
-            <span className="bg-orange-500 p-2 rounded-lg w-fit">
-              <Image
-                loading="lazy"
-                width={30}
-                height={30}
-                src="https://saasta.buildwithiqra.com/document.svg"
-                alt="Document Icon"
-              />
-            </span>
-            <h3 className="mt-3 text-base font-medium">Document Sharing</h3>
-            <p className="text-gray-700">Easily share the relevant task documents.</p>
+          
+          <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-8 transition-all duration-300 hover:border-zinc-700 hover:translate-y-[-5px]">
+            <div className="w-12 h-12 rounded-xl bg-yellow-500/20 flex items-center justify-center mb-6">
+              <Lock className="w-6 h-6 text-yellow-400" />
+            </div>
+            <h3 className="text-xl font-medium mb-3">Best In Class AI</h3>
+            <p className="text-gray-400">
+              Have access to the best model for a given task. Take the compliance and security worries off your plate.
+            </p>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Testimonials Section */}
-      <div className="bg-black rounded-[32px] mt-10 text-center px-4 pt-10 sm:p-14">
-        <div>
-          <span className="flex mx-auto gap-2 bg-orange-500 text-black mb-5 w-fit p-1 px-3 rounded-full">
-            <Image
-              loading="lazy"
-              width={20}
-              height={20}
-              src="https://saasta.buildwithiqra.com/review.svg"
-              alt="Review Icon"
-            />
-            Happy customers
-          </span>
-          <h2 className="mb-5 text-center font-display text-3xl tracking-tight sm:leading-[50px] mx-auto mt-5 max-w-[70%] sm:max-w-[70%] text-white sm:text-[42px]">
-            What our client say about <span className="text-orange-500">us</span>
-          </h2>
-
-          <div className="flex w-full m-0 p-0 sm:w-auto sm:px-10">
-            <div className="px-2 w-full">
-              {/* Single Testimonial */}
-              <div className="rounded-lg border border-gray-700 bg-gray-800 shadow-sm p-6 w-full max-w-96 mb-4">
-                <blockquote>
-                  <p className="text-base text-left text-gray-400 leading-7 mt-1">
-                    saasta transformed our online presence from the ground up. The design is
-                    stunning, and the user experience has been phenomenal. Their team was with us
-                    every step of the way!
+      {/* Block Types Section */}
+      <section id="blocks" className="container mx-auto px-4 py-24">
+        <h2 className="text-3xl font-medium text-center mb-2">Intelligent Blocks That Work For You</h2>
+        <p className="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+          Once your workflow is defined, AI takes over. Each block handles its specialized task autonomously,
+          adapting to your data and getting smarter over time.
+        </p>
+        
+        <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-8">
+          <div className="flex flex-wrap justify-center gap-2 mb-8">
+            <button 
+              onClick={() => setActiveBlock('input')}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                activeBlock === 'input' ? 'bg-orange-500 text-black' : 'bg-zinc-800 text-gray-300 hover:bg-zinc-700'
+              }`}
+            >
+              Input Blocks
+            </button>
+            <button 
+              onClick={() => setActiveBlock('processing')}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                activeBlock === 'processing' ? 'bg-orange-500 text-black' : 'bg-zinc-800 text-gray-300 hover:bg-zinc-700'
+              }`}
+            >
+              Processing Blocks
+            </button>
+            <button 
+              onClick={() => setActiveBlock('decision')}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                activeBlock === 'decision' ? 'bg-orange-500 text-black' : 'bg-zinc-800 text-gray-300 hover:bg-zinc-700'
+              }`}
+            >
+              Decision Blocks
+            </button>
+            <button 
+              onClick={() => setActiveBlock('output')}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                activeBlock === 'output' ? 'bg-orange-500 text-black' : 'bg-zinc-800 text-gray-300 hover:bg-zinc-700'
+              }`}
+            >
+              Output Blocks
+            </button>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div>
+              {activeBlock === 'input' && (
+                <>
+                  <h3 className="text-2xl font-medium mb-4">Input Blocks</h3>
+                  <p className="text-gray-400 mb-6">
+                    Gather data from forms, emails, databases, and more. Input blocks connect your workflows
+                    to any source of information you need.
                   </p>
-                </blockquote>
-                <div className="flex gap-2 mt-10">
-                  <Image
-                    alt="profile"
-                    loading="lazy"
-                    width={45}
-                    height={45}
-                    className="object-cover rounded-full border-2 border-gray-700"
-                    src="https://saasta.buildwithiqra.com/juno.jpg"
-                  />
-                  <div>
-                    <p className="text-base font-medium text-left text-white">Juno Cooper</p>
-                    <p className="text-sm text-left text-gray-400">Small Business Owner</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Single Testimonial */}
-              <div className="rounded-lg border border-gray-700 bg-gray-800 shadow-sm p-6 w-full max-w-96 mb-4">
-                <blockquote>
-                  <p className="text-base text-left text-gray-400 leading-7 mt-1">
-                    Choosing saasta was the best decision for our business. They created a custom
-                    solution that was both beautiful and functional. The support team is responsive
-                    and truly cares about our success.
+                  <ul className="space-y-3">
+                    <li className="flex items-center">
+                      <div className="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center mr-3">
+                        <CheckCircle2 className="w-3 h-3 text-black" />
+                      </div>
+                      <span className="text-gray-300">Form capture and validation</span>
+                    </li>
+                    <li className="flex items-center">
+                      <div className="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center mr-3">
+                        <CheckCircle2 className="w-3 h-3 text-black" />
+                      </div>
+                      <span className="text-gray-300">Email and document parsing</span>
+                    </li>
+                    <li className="flex items-center">
+                      <div className="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center mr-3">
+                        <CheckCircle2 className="w-3 h-3 text-black" />
+                      </div>
+                      <span className="text-gray-300">API and webhook integration</span>
+                    </li>
+                  </ul>
+                </>
+              )}
+              
+              {activeBlock === 'processing' && (
+                <>
+                  <h3 className="text-2xl font-medium mb-4">Processing Blocks</h3>
+                  <p className="text-gray-400 mb-6">
+                    Transform, analyze, and extract insights from your data. Processing blocks apply
+                    intelligent operations to prepare information for the next step.
                   </p>
-                </blockquote>
-                <div className="flex gap-2 mt-10">
-                  <Image
-                    alt="profile"
-                    loading="lazy"
-                    width={45}
-                    height={45}
-                    className="object-cover rounded-full border-2 border-gray-700"
-                    src="https://saasta.buildwithiqra.com/maria.jpg"
-                  />
-                  <div>
-                    <p className="text-base font-medium text-left text-white">Nina Simone</p>
-                    <p className="text-sm text-left text-gray-400">Marketing Director</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Single Testimonial */}
-              <div className="rounded-lg border border-gray-700 bg-gray-800 shadow-sm p-6 w-full max-w-96 mb-4">
-                <blockquote>
-                  <p className="text-base text-left text-gray-400 leading-7 mt-1">
-                    From initial contact to the final product, saasta delivered on everything they
-                    promised. We’ve seen a boost in engagement, and our clients are loving the new
-                    website. Highly recommend!
+                  <ul className="space-y-3">
+                    <li className="flex items-center">
+                      <div className="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center mr-3">
+                        <CheckCircle2 className="w-3 h-3 text-black" />
+                      </div>
+                      <span className="text-gray-300">AI-powered data extraction</span>
+                    </li>
+                    <li className="flex items-center">
+                      <div className="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center mr-3">
+                        <CheckCircle2 className="w-3 h-3 text-black" />
+                      </div>
+                      <span className="text-gray-300">Format transformation and normalization</span>
+                    </li>
+                    <li className="flex items-center">
+                      <div className="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center mr-3">
+                        <CheckCircle2 className="w-3 h-3 text-black" />
+                      </div>
+                      <span className="text-gray-300">Machine learning analysis</span>
+                    </li>
+                  </ul>
+                </>
+              )}
+              
+              {activeBlock === 'decision' && (
+                <>
+                  <h3 className="text-2xl font-medium mb-4">Decision Blocks</h3>
+                  <p className="text-gray-400 mb-6">
+                    Make intelligent routing decisions based on complex criteria. Decision blocks
+                    determine the path your workflow should take next.
                   </p>
-                </blockquote>
-                <div className="flex gap-2 mt-10">
-                  <Image
-                    alt="profile"
-                    loading="lazy"
-                    width={45}
-                    height={45}
-                    className="object-cover rounded-full border-2 border-gray-700"
-                    src="https://saasta.buildwithiqra.com/jordan.jpg"
-                  />
-                  <div>
-                    <p className="text-base font-medium text-left text-white">Jordan Peterson</p>
-                    <p className="text-sm text-left text-gray-400">Founder</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Single Testimonial */}
-              <div className="rounded-lg border border-gray-700 bg-gray-800 shadow-sm p-6 w-full max-w-96 mb-4">
-                <blockquote>
-                  <p className="text-base text-left text-gray-400 leading-7 mt-1">
-                    Our project was completed ahead of schedule, and the results have exceeded
-                    expectations. saasta’s team took the time to understand our brand and brought
-                    our vision to life flawlessly.
+                  <ul className="space-y-3">
+                    <li className="flex items-center">
+                      <div className="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center mr-3">
+                        <CheckCircle2 className="w-3 h-3 text-black" />
+                      </div>
+                      <span className="text-gray-300">Conditional branching logic</span>
+                    </li>
+                    <li className="flex items-center">
+                      <div className="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center mr-3">
+                        <CheckCircle2 className="w-3 h-3 text-black" />
+                      </div>
+                      <span className="text-gray-300">AI-based decision making</span>
+                    </li>
+                    <li className="flex items-center">
+                      <div className="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center mr-3">
+                        <CheckCircle2 className="w-3 h-3 text-black" />
+                      </div>
+                      <span className="text-gray-300">Pattern recognition and prediction</span>
+                    </li>
+                  </ul>
+                </>
+              )}
+              
+              {activeBlock === 'output' && (
+                <>
+                  <h3 className="text-2xl font-medium mb-4">Output Blocks</h3>
+                  <p className="text-gray-400 mb-6">
+                    Generate reports, send notifications, update systems, and more. Output blocks
+                    deliver the results of your workflow where they need to go.
                   </p>
-                </blockquote>
-                <div className="flex gap-2 mt-10">
-                  <Image
-                    alt="profile"
-                    loading="lazy"
-                    width={45}
-                    height={45}
-                    className="object-cover rounded-full border-2 border-gray-700"
-                    src="https://saasta.buildwithiqra.com/david.jpg"
-                  />
-                  <div>
-                    <p className="text-base font-medium text-left text-white">david Goggins</p>
-                    <p className="text-sm text-left text-gray-400">Sales Manager</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Single Testimonial */}
-              <div className="rounded-lg border border-gray-700 bg-gray-800 shadow-sm p-6 w-full max-w-96 mb-4">
-                <blockquote>
-                  <p className="text-base text-left text-gray-400 leading-7 mt-1">
-                    saasta’s support team is always there when we need them. They helped us build a
-                    site that not only looks great but performs even better. The process was smooth,
-                    and the outcome was impressive.
-                  </p>
-                </blockquote>
-                <div className="flex gap-2 mt-10">
-                  <Image
-                    alt="profile"
-                    loading="lazy"
-                    width={45}
-                    height={45}
-                    className="object-cover rounded-full border-2 border-gray-700"
-                    src="https://saasta.buildwithiqra.com/lucas.jpg"
-                  />
-                  <div>
-                    <p className="text-base font-medium text-left text-white">Lucas Miller</p>
-                    <p className="text-sm text-left text-gray-400">Photographer</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Single Testimonial */}
-              <div className="rounded-lg border border-gray-700 bg-gray-800 shadow-sm p-6 w-full max-w-96 mb-4">
-                <blockquote>
-                  <p className="text-base text-left text-gray-400 leading-7 mt-1">
-                    We couldn’t be happier with our new website. saasta’s team was professional,
-                    responsive, and delivered a product that exceeded our expectations. We’re
-                    excited to continue working with them.
-                  </p>
-                </blockquote>
-                <div className="flex gap-2 mt-10">
-                  <Image
-                    alt="profile"
-                    loading="lazy"
-                    width={45}
-                    height={45}
-                    className="object-cover rounded-full border-2 border-gray-700"
-                    src="https://saasta.buildwithiqra.com/s.jpg"
-                  />
-                  <div>
-                    <p className="text-base font-medium text-left text-white">Samantha Rose</p>
-                    <p className="text-sm text-left text-gray-400">Creative Director</p>
+                  <ul className="space-y-3">
+                    <li className="flex items-center">
+                      <div className="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center mr-3">
+                        <CheckCircle2 className="w-3 h-3 text-black" />
+                      </div>
+                      <span className="text-gray-300">Formatted report generation</span>
+                    </li>
+                    <li className="flex items-center">
+                      <div className="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center mr-3">
+                        <CheckCircle2 className="w-3 h-3 text-black" />
+                      </div>
+                      <span className="text-gray-300">Multi-channel notifications</span>
+                    </li>
+                    <li className="flex items-center">
+                      <div className="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center mr-3">
+                        <CheckCircle2 className="w-3 h-3 text-black" />
+                      </div>
+                      <span className="text-gray-300">System integrations and updates</span>
+                    </li>
+                  </ul>
+                </>
+              )}
+            </div>
+            
+            <div className="relative">
+              <div className="bg-zinc-800 rounded-xl border border-zinc-700 p-1 shadow-xl">
+                <div className="bg-zinc-900 rounded-lg overflow-hidden p-6">
+                  <div className="flex flex-col items-center">
+                    {activeBlock === 'input' && (
+                      <div className="w-full">
+                        <div className="flex items-center justify-center bg-zinc-800 rounded-lg p-4 mb-4">
+                          <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center mr-4">
+                            <Database className="w-5 h-5 text-blue-400" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="h-2 bg-zinc-700 rounded w-3/4 mb-2"></div>
+                            <div className="h-2 bg-zinc-700 rounded w-1/2"></div>
+                          </div>
+                        </div>
+                        <div className="flex justify-center">
+                          <CornerRightDown className="text-zinc-600 w-6 h-6 animate-bounce" />
+                        </div>
+                      </div>
+                    )}
+                    
+                    {activeBlock === 'processing' && (
+                      <div className="w-full">
+                        <div className="flex items-center justify-center bg-zinc-800 rounded-lg p-4 mb-4">
+                          <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center mr-4">
+                            <Brain className="w-5 h-5 text-purple-400" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="h-2 bg-zinc-700 rounded w-3/4 mb-2"></div>
+                            <div className="h-2 bg-zinc-700 rounded w-1/2"></div>
+                          </div>
+                        </div>
+                        <div className="flex justify-center">
+                          <CornerRightDown className="text-zinc-600 w-6 h-6 animate-bounce" />
+                        </div>
+                      </div>
+                    )}
+                    
+                    {activeBlock === 'decision' && (
+                      <div className="w-full">
+                        <div className="flex items-center justify-center bg-zinc-800 rounded-lg p-4 mb-4">
+                          <div className="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center mr-4">
+                            <Settings className="w-5 h-5 text-green-400" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="h-2 bg-zinc-700 rounded w-3/4 mb-2"></div>
+                            <div className="h-2 bg-zinc-700 rounded w-1/2"></div>
+                          </div>
+                        </div>
+                        <div className="flex justify-center">
+                          <CornerRightDown className="text-zinc-600 w-6 h-6 animate-bounce" />
+                        </div>
+                      </div>
+                    )}
+                    
+                    {activeBlock === 'output' && (
+                      <div className="w-full">
+                        <div className="flex items-center justify-center bg-zinc-800 rounded-lg p-4 mb-4">
+                          <div className="w-10 h-10 rounded-lg bg-red-500/20 flex items-center justify-center mr-4">
+                            <Zap className="w-5 h-5 text-red-400" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="h-2 bg-zinc-700 rounded w-3/4 mb-2"></div>
+                            <div className="h-2 bg-zinc-700 rounded w-1/2"></div>
+                          </div>
+                        </div>
+                        <div className="flex justify-center">
+                          <CheckCircle2 className="text-green-500 w-6 h-6" />
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* Use Cases Section */}
+      <section id="use-cases" className="container mx-auto px-4 py-24">
+        <h2 className="text-3xl font-medium text-center mb-2">Common Use Cases</h2>
+        <p className="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+          See how Tangram&apos;s modular workflow approach can transform various processes.
+        </p>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-8 transition-all duration-300 hover:border-zinc-700">
+            <div className="w-12 h-12 rounded-xl bg-orange-500/20 flex items-center justify-center mb-6">
+              <Database className="w-6 h-6 text-orange-400" />
+            </div>
+            <h3 className="text-xl font-medium mb-3">Data Processing</h3>
+            <p className="text-gray-400 mb-4">
+              Extract, transform, and analyze data from multiple sources, automatically organizing information 
+              for further use.
+            </p>
+            <ul className="space-y-2">
+              <li className="flex items-start">
+                <div className="w-5 h-5 rounded-full bg-zinc-800 flex items-center justify-center mr-3 mt-0.5">
+                  <CheckCircle2 className="w-3 h-3 text-orange-400" />
+                </div>
+                <span className="text-gray-400 text-sm">Document information extraction</span>
+              </li>
+              <li className="flex items-start">
+                <div className="w-5 h-5 rounded-full bg-zinc-800 flex items-center justify-center mr-3 mt-0.5">
+                  <CheckCircle2 className="w-3 h-3 text-orange-400" />
+                </div>
+                <span className="text-gray-400 text-sm">Data cleaning and formatting</span>
+              </li>
+              <li className="flex items-start">
+                <div className="w-5 h-5 rounded-full bg-zinc-800 flex items-center justify-center mr-3 mt-0.5">
+                  <CheckCircle2 className="w-3 h-3 text-orange-400" />
+                </div>
+                <span className="text-gray-400 text-sm">Automated report generation</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-8 transition-all duration-300 hover:border-zinc-700">
+            <div className="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center mb-6">
+              <Bot className="w-6 h-6 text-blue-400" />
+            </div>
+            <h3 className="text-xl font-medium mb-3">Content Generation</h3>
+            <p className="text-gray-400 mb-4">
+              Create, optimize, and distribute content across platforms, maintaining consistent branding and messaging.
+            </p>
+            <ul className="space-y-2">
+              <li className="flex items-start">
+                <div className="w-5 h-5 rounded-full bg-zinc-800 flex items-center justify-center mr-3 mt-0.5">
+                  <CheckCircle2 className="w-3 h-3 text-blue-400" />
+                </div>
+                <span className="text-gray-400 text-sm">Social media content scheduling</span>
+              </li>
+              <li className="flex items-start">
+                <div className="w-5 h-5 rounded-full bg-zinc-800 flex items-center justify-center mr-3 mt-0.5">
+                  <CheckCircle2 className="w-3 h-3 text-blue-400" />
+                </div>
+                <span className="text-gray-400 text-sm">Blog post creation and optimization</span>
+              </li>
+              <li className="flex items-start">
+                <div className="w-5 h-5 rounded-full bg-zinc-800 flex items-center justify-center mr-3 mt-0.5">
+                  <CheckCircle2 className="w-3 h-3 text-blue-400" />
+                </div>
+                <span className="text-gray-400 text-sm">Multi-channel content distribution</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-8 transition-all duration-300 hover:border-zinc-700">
+            <div className="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center mb-6">
+              <Boxes className="w-6 h-6 text-green-400" />
+            </div>
+            <h3 className="text-xl font-medium mb-3">Customer Engagement</h3>
+            <p className="text-gray-400 mb-4">
+              Build personalized communication flows that respond to user actions, increasing engagement and conversion.
+            </p>
+            <ul className="space-y-2">
+              <li className="flex items-start">
+                <div className="w-5 h-5 rounded-full bg-zinc-800 flex items-center justify-center mr-3 mt-0.5">
+                  <CheckCircle2 className="w-3 h-3 text-green-400" />
+                </div>
+                <span className="text-gray-400 text-sm">Automated email nurture sequences</span>
+              </li>
+              <li className="flex items-start">
+                <div className="w-5 h-5 rounded-full bg-zinc-800 flex items-center justify-center mr-3 mt-0.5">
+                  <CheckCircle2 className="w-3 h-3 text-green-400" />
+                </div>
+                <span className="text-gray-400 text-sm">Personalized product recommendations</span>
+              </li>
+              <li className="flex items-start">
+                <div className="w-5 h-5 rounded-full bg-zinc-800 flex items-center justify-center mr-3 mt-0.5">
+                  <CheckCircle2 className="w-3 h-3 text-green-400" />
+                </div>
+                <span className="text-gray-400 text-sm">Customer feedback collection and analysis</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-8 transition-all duration-300 hover:border-zinc-700">
+            <div className="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center mb-6">
+              <Workflow className="w-6 h-6 text-purple-400" />
+            </div>
+            <h3 className="text-xl font-medium mb-3">Business Operations</h3>
+            <p className="text-gray-400 mb-4">
+              Automate repetitive tasks and approval processes, freeing up time for strategic work.
+            </p>
+            <ul className="space-y-2">
+              <li className="flex items-start">
+                <div className="w-5 h-5 rounded-full bg-zinc-800 flex items-center justify-center mr-3 mt-0.5">
+                  <CheckCircle2 className="w-3 h-3 text-purple-400" />
+                </div>
+                <span className="text-gray-400 text-sm">Document approval workflows</span>
+              </li>
+              <li className="flex items-start">
+                <div className="w-5 h-5 rounded-full bg-zinc-800 flex items-center justify-center mr-3 mt-0.5">
+                  <CheckCircle2 className="w-3 h-3 text-purple-400" />
+                </div>
+                <span className="text-gray-400 text-sm">Employee onboarding automation</span>
+              </li>
+              <li className="flex items-start">
+                <div className="w-5 h-5 rounded-full bg-zinc-800 flex items-center justify-center mr-3 mt-0.5">
+                  <CheckCircle2 className="w-3 h-3 text-purple-400" />
+                </div>
+                <span className="text-gray-400 text-sm">Expense report processing</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
 
       {/* Pricing Section */}
-      <div
-        id="pricing"
-        className="bg-white p-5 sm:p-14 text-black mt-10 min-h-[500px] rounded-[32px]"
-      >
-        <span className="flex mx-auto gap-2 bg-orange-500 text-black w-fit p-1 px-3 rounded-full">
-          <Image
-            loading="lazy"
-            width={20}
-            height={20}
-            src="https://saasta.buildwithiqra.com/pricing.svg"
-            alt="Pricing Icon"
-          />
-          Our Pricing
-        </span>
-        <h2 className="mb-5 text-center font-display text-3xl tracking-tight sm:leading-[50px] mx-auto mt-5 max-w-[70%] sm:max-w-[70%] sm:text-[42px]">
-          Our Pricing plans
-        </h2>
-        <p className="text-center text-gray-600 w-full sm:max-w-[60%] mx-auto">
-          Discover SAP, your ultimate solution for seamless project management. With cutting-edge
-          tools and intuitive features
+      <section id="pricing" className="container mx-auto px-4 py-24">
+        <h2 className="text-3xl font-medium text-center mb-2">Only Pay For What You Use</h2>
+        <p className="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+          No more wasted subscription fees. With Tangram's usage-based pricing, you only pay 
+          for the blocks and executions you actually use.
         </p>
-
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-7">
-          {/* Starter Plan */}
-          <div className="flex text-left flex-col gap-5 bg-gray-100 border border-gray-300 rounded-xl p-7">
-            <div>
-              <span className="text-xl font-medium">Starter plan</span>
-              <p className="mt-2 text-gray-600">Basic Ideal package for growing businesses</p>
-            </div>
-            <h3 className="text-4xl font-bold text-black">
-              $2,000/<span className="font-normal text-gray-600 text-base"> month</span>
-            </h3>
-            <ul className="flex flex-col gap-5">
-              <li className="flex gap-4">
-                <Image
-                  alt="vinkje"
-                  loading="lazy"
-                  width={20}
-                  height={20}
-                  src="https://saasta.buildwithiqra.com/vinkje.svg"
-                />
-                Responsive Website Design
-              </li>
-              <li className="flex gap-4">
-                <Image
-                  alt="vinkje"
-                  loading="lazy"
-                  width={20}
-                  height={20}
-                  src="https://saasta.buildwithiqra.com/vinkje.svg"
-                />
-                Basic SEO Optimization
-              </li>
-              <li className="flex gap-4 line-through text-gray-400">
-                <Image
-                  alt="vinkjeGrey"
-                  loading="lazy"
-                  width={20}
-                  height={20}
-                  src="https://saasta.buildwithiqra.com/vinkjeGrey.svg"
-                />
-                24/7 Dedicated Support
-              </li>
-              <li className="flex gap-4 line-through text-gray-400">
-                <Image
-                  alt="vinkjeGrey"
-                  loading="lazy"
-                  width={20}
-                  height={20}
-                  src="https://saasta.buildwithiqra.com/vinkjeGrey.svg"
-                />
-                Regular Maintenance and Updates
-              </li>
-            </ul>
-            <Link href="/#">
-              <button className="mt-5 bg-black hover:text-orange-500 text-white font-medium text-base h-11 w-full py-3 px-2 pr-5 rounded-full inline-flex items-center justify-center gap-2">
-                Get started
-              </button>
-            </Link>
-          </div>
-
-          {/* Lite Plan */}
-          <div className="flex text-left flex-col text-white gap-5 bg-black rounded-xl p-7">
-            <div className="relative">
-              <div className="absolute right-0 -top-1 bg-orange-500 font-semibold text-black text-sm w-fit py-1 px-4 rounded-full">
-                Popular
+        
+        <div className="relative mb-16 max-w-4xl mx-auto">
+          <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-8">
+            <div className="flex items-center mb-8">
+              <div className="w-12 h-12 rounded-xl bg-orange-500/20 flex items-center justify-center mr-4">
+                <CreditCard className="w-6 h-6 text-orange-400" />
               </div>
-              <span className="text-xl font-medium">Lite plan</span>
-              <p className="mt-2 text-gray-400">Advanced package for expanded businesses</p>
+              <div>
+                <h3 className="text-xl font-medium">Fair Usage Pricing</h3>
+                <p className="text-gray-400">Your costs scale directly with your actual usage</p>
+              </div>
             </div>
-            <h3 className="text-4xl font-bold text-white">
-              $5,000/<span className="font-normal text-base"> month</span>
-            </h3>
-            <ul className="flex flex-col gap-5">
-              <li className="flex gap-4">
-                <Image
-                  alt="vinkje"
-                  loading="lazy"
-                  width={20}
-                  height={20}
-                  src="https://saasta.buildwithiqra.com/whitevinkje.svg"
-                />
-                Custom Responsive Website Design
-              </li>
-              <li className="flex gap-4">
-                <Image
-                  alt="vinkje"
-                  loading="lazy"
-                  width={20}
-                  height={20}
-                  src="https://saasta.buildwithiqra.com/whitevinkje.svg"
-                />
-                Enhanced SEO and Analytics
-              </li>
-              <li className="flex gap-4">
-                <Image
-                  alt="vinkje"
-                  loading="lazy"
-                  width={20}
-                  height={20}
-                  src="https://saasta.buildwithiqra.com/whitevinkje.svg"
-                />
-                24/7 Dedicated Support Team
-              </li>
-              <li className="flex gap-4 line-through text-gray-500">
-                <Image
-                  alt="vinkjeGrey"
-                  loading="lazy"
-                  width={20}
-                  height={20}
-                  src="https://saasta.buildwithiqra.com/vinkjeGrey.svg"
-                />
-                Regular Maintenance and Updates
-              </li>
-            </ul>
-            <Link href="/#">
-              <button className="mt-5 bg-orange-500 hover:text-white text-black font-medium text-base h-11 w-full py-3 px-2 pr-5 rounded-full inline-flex items-center justify-center gap-2">
-                Get started
-              </button>
-            </Link>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h4 className="font-medium mb-2">What's Included:</h4>
+                <ul className="space-y-3">
+                  <li className="flex items-center">
+                    <div className="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center mr-3">
+                      <CheckCircle2 className="w-3 h-3 text-black" />
+                    </div>
+                    <span className="text-gray-300">Pay per workflow execution</span>
+                  </li>
+                  <li className="flex items-center">
+                    <div className="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center mr-3">
+                      <CheckCircle2 className="w-3 h-3 text-black" />
+                    </div>
+                    <span className="text-gray-300">No minimum commitment</span>
+                  </li>
+                  <li className="flex items-center">
+                    <div className="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center mr-3">
+                      <CheckCircle2 className="w-3 h-3 text-black" />
+                    </div>
+                    <span className="text-gray-300">Scale up or down instantly</span>
+                  </li>
+                  <li className="flex items-center">
+                    <div className="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center mr-3">
+                      <CheckCircle2 className="w-3 h-3 text-black" />
+                    </div>
+                    <span className="text-gray-300">No charge for inactive workflows</span>
+                  </li>
+                  <li className="flex items-center">
+                    <div className="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center mr-3">
+                      <CheckCircle2 className="w-3 h-3 text-black" />
+                    </div>
+                    <span className="text-gray-300">Volume discounts automatically applied</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div className="relative">
+                <div className="h-48 bg-gradient-to-b from-zinc-800/50 to-zinc-900 rounded-xl flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="text-5xl font-bold text-orange-500">$0.01</div>
+                    <div className="text-gray-400 mt-1">per block execution</div>
+                    <div className="mt-4 text-gray-500 text-sm">Coming Soon</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-
-          {/* Professional Plan */}
-          <div className="flex text-left flex-col gap-5 bg-gray-100 border border-gray-300 rounded-xl p-7">
-            <div>
-              <span className="text-xl font-medium">Professional Plan</span>
-              <p className="mt-2 text-gray-600">Basic Ideal package for growing businesses</p>
+          
+          <div className="absolute -bottom-8 right-8 bg-zinc-800 rounded-xl p-4 border border-zinc-700 shadow-xl">
+            <div className="flex items-center">
+              <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center">
+                <Zap className="w-5 h-5 text-black" />
+              </div>
+              <div className="ml-3">
+                <p className="text-sm font-medium">Build as many workflows as you need</p>
+                <p className="text-xs text-gray-400">You're only charged when they run</p>
+              </div>
             </div>
-            <h3 className="text-4xl font-bold text-black">
-              $2,000/
-              <span className="font-normal text-gray-600 text-base"> month</span>
-            </h3>
-            <ul className="flex flex-col gap-5">
-              <li className="flex gap-4">
-                <Image
-                  alt="vinkje"
-                  loading="lazy"
-                  width={20}
-                  height={20}
-                  src="https://saasta.buildwithiqra.com/vinkje.svg"
-                />
-                Responsive Website Design
-              </li>
-              <li className="flex gap-4">
-                <Image
-                  alt="vinkje"
-                  loading="lazy"
-                  width={20}
-                  height={20}
-                  src="https://saasta.buildwithiqra.com/vinkje.svg"
-                />
-                Basic SEO Optimization
-              </li>
-              <li className="flex gap-4 line-through text-gray-400">
-                <Image
-                  alt="vinkjeGrey"
-                  loading="lazy"
-                  width={20}
-                  height={20}
-                  src="https://saasta.buildwithiqra.com/vinkjeGrey.svg"
-                />
-                24/7 Dedicated Support
-              </li>
-              <li className="flex gap-4 line-through text-gray-400">
-                <Image
-                  alt="vinkjeGrey"
-                  loading="lazy"
-                  width={20}
-                  height={20}
-                  src="https://saasta.buildwithiqra.com/vinkjeGrey.svg"
-                />
-                Regular Maintenance and Updates
-              </li>
-            </ul>
-            <Link href="/#">
-              <button className="mt-5 bg-black hover:text-orange-500 text-white font-medium text-base h-11 w-full py-3 px-2 pr-5 rounded-full inline-flex items-center justify-center gap-2">
-                Get started
-              </button>
-            </Link>
           </div>
         </div>
-      </div>
+        
+        <div className="text-center">
+          <a href="#notify" className="inline-flex items-center text-orange-500 hover:text-orange-400 font-medium transition-colors">
+            Get notified when we launch
+            <ArrowRight className="ml-2 w-4 h-4" />
+          </a>
+        </div>
+      </section>
 
-      {/* Call to Action */}
-      <div className="bg-[#171717] rounded-[32px] pt-16 sm:pt-32 text-center mt-10 sm:mt-7">
-        <span className="flex mx-auto gap-2 bg-orange-500 text-black mb-5 w-fit p-1 px-3 rounded-full">
-          <Image
-            loading="lazy"
-            width={20}
-            height={20}
-            src="https://saasta.buildwithiqra.com/review.svg"
-            alt="Review Icon"
-          />
-          Happy customers
-        </span>
-        <h2 className="mb-5 text-center font-display text-3xl tracking-tight sm:leading-[50px] mx-auto mt-5 max-w-[80%] sm:max-w-[70%] text-white sm:text-[42px]">
-          Ready to launch your SaaS?
-        </h2>
-        <div className="mx-auto space-y-4 mt-5 text-lg text-gray-300 max-w-lg">
-          <p>
-            Build Professional Websites Without a Single Line of Code, Blasting Speed, and Elevate
-            SEO and Performance.
+      {/* CTA Section */}
+      <section className="container mx-auto px-4 py-24">
+        <div className="bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 rounded-3xl p-12 text-center">
+          <h2 className="text-3xl font-medium mb-4">Ready to transform your workflow?</h2>
+          <p className="text-gray-400 max-w-2xl mx-auto mb-8">
+            Be the first to experience Tangram.ai's modular AI-powered workflow platform.
           </p>
+          
+          <form onSubmit={handleSubscribe} className="max-w-md mx-auto relative">
+            <input
+              type="email"
+              placeholder="Enter your email "
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full bg-zinc-900 border border-zinc-700 rounded-full px-6 py-3 pr-36 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+              required
+            />
+            <button
+              type="submit"
+              className="absolute right-1.5 top-1.5 bg-orange-500 hover:bg-orange-600 text-black font-medium rounded-full px-4 py-1.5 transition-all duration-200"
+            >
+              Get Notified
+            </button>
+          </form>
+          {subscribed && (
+            <p className="text-center text-green-400 mt-2 text-sm">
+              Thanks! We'll notify you when we launch.
+            </p>
+          )}
+          <p className="text-gray-500 text-sm mt-4">We respect your privacy and won't share your information.</p>
         </div>
-        <Link href="/#contact">
-          <button className="mt-5 bg-orange-500 hover:text-white text-black font-medium text-base h-11 py-3 px-2 pr-5 rounded-full inline-flex items-center justify-center gap-2">
-            <span className="bg-black p-2 rounded-full">
-              <Image
-                alt="arrow"
-                loading="lazy"
-                width={20}
-                height={20}
-                src="https://saasta.buildwithiqra.com/arrow.svg"
-              />
-            </span>
-            Start today for FREE
-          </button>
-        </Link>
-        <p className="text-gray-400 text-sm mt-2 pb-20">No credit card required.</p>
-      </div>
+      </section>
 
       {/* Footer */}
-      <footer className="py-10 min-h-[100px] pt-[10px] h-full bg-black text-gray-300">
-        <div className="mx-auto max-w-7xl px-6 pt-16 sm:pt-24 lg:px-8 lg:pt-16">
-          <div className="xl:grid xl:grid-cols-3 xl:gap-12">
-            {/* Footer Logo & Description */}
-            <div className='flex flex-row gap-4 items-center justify-between'>
-              <Image
-                alt="logo"
-                loading="lazy"
-                width={40}
-                height={30}
-                src="/tangram_logo.png"
-                className=""
-              />
-              <p className="mt-4 text-gray-400">
-                Let us help you accelerate.
+      <footer className="mt-auto border-t border-zinc-900 py-12">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <span className="text-xl font-medium">tangram.ai</span>
+                <Image
+                  src="/tangram_logo.png"
+                  alt="Tangram Logo"
+                  width={24}
+                  height={24}
+                />
+              </div>
+              <p className="text-gray-400 mb-4">
+                Modular AI-powered workflows that work for you.
               </p>
+              <p className="text-sm text-gray-500">© 2025 Tangram AI, Inc.</p>
             </div>
-
-            {/* Footer Links */}
-            <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
-              <div className="md:grid md:grid-cols-2 md:gap-8">
-                <div>
-                  <h3 className="text-lg font-medium leading-6">Features</h3>
-                  <ul role="list" className="mt-6 space-y-4">
-                    <li>
-                      <a
-                        className="text-sm leading-6 text-gray-400 hover:text-orange-500"
-                        href="/authentication"
-                      >
-                        Authentication
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        className="text-sm leading-6 text-gray-400 hover:text-orange-500"
-                        href="/database"
-                      >
-                        Database
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        className="text-sm leading-6 text-gray-400 hover:text-orange-500"
-                        href="/payments"
-                      >
-                        Payments
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        className="text-sm leading-6 text-gray-400 hover:text-orange-500"
-                        href="/emails"
-                      >
-                        Emails
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        className="text-sm leading-6 text-gray-400 hover:text-orange-500"
-                        href="/file-storage"
-                      >
-                        File Storage
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        className="text-sm leading-6 text-gray-400 hover:text-orange-500"
-                        href="/admin-panel"
-                      >
-                        Admin Dashboard
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        className="text-sm leading-6 text-gray-400 hover:text-orange-500"
-                        href="/settings-page"
-                      >
-                        Settings Page
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="mt-10 md:mt-0">
-                  <h3 className="text-lg font-medium leading-6">Support</h3>
-                  <ul role="list" className="mt-6 space-y-4">
-                    <li>
-                      <a
-                        className="text-sm leading-6 text-gray-400 hover:text-orange-500"
-                        href="/activate-license"
-                      >
-                        Activate License
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="https://discord.gg/yqYnveQaeK"
-                        rel="noopener noreferrer"
-                        className="text-sm leading-6 text-gray-400 hover:text-orange-500"
-                      >
-                        Discord
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="mailto:fayaz@supersaas.dev"
-                        rel="noopener noreferrer"
-                        className="text-sm leading-6 text-gray-400 hover:text-orange-500"
-                      >
-                        Email Us
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="https://t.me/fayazara"
-                        rel="noopener noreferrer"
-                        className="text-sm leading-6 text-gray-400 hover:text-orange-500"
-                      >
-                        Telegram me
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        className="text-sm leading-6 text-gray-400 hover:text-orange-500"
-                        href="/affiliate-program"
-                      >
-                        Affiliate Program
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="md:grid md:grid-cols-2 md:gap-8">
-                <div>
-                  <h3 className="text-lg font-medium leading-6">Resources</h3>
-                  <ul role="list" className="mt-6 space-y-4">
-                    <li>
-                      <a
-                        className="text-sm leading-6 text-gray-400 hover:text-orange-500"
-                        href="/about"
-                      >
-                        About
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        className="text-sm leading-6 text-gray-400 hover:text-orange-500"
-                        href="/blog"
-                      >
-                        Blog
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        className="text-sm leading-6 text-gray-400 hover:text-orange-500"
-                        href="/tools"
-                      >
-                        Tools
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        className="text-sm leading-6 text-gray-400 hover:text-orange-500"
-                        href="/docs"
-                      >
-                        Documentation
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div className="mt-10 md:mt-0">
-                  <h3 className="text-lg font-medium leading-6">Legal</h3>
-                  <ul role="list" className="mt-6 space-y-4">
-                    <li>
-                      <a
-                        className="text-sm leading-6 text-gray-400 hover:text-orange-500"
-                        href="/license"
-                      >
-                        License
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        className="text-sm leading-6 text-gray-400 hover:text-orange-500"
-                        href="/privacy-policy"
-                      >
-                        Privacy
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        className="text-sm leading-6 text-gray-400 hover:text-orange-500"
-                        href="/tos"
-                      >
-                        Terms
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+            
+            <div>
+              <h3 className="text-lg font-medium mb-4">Company</h3>
+              <ul className="space-y-2">
+                <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">About Us</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">Blog</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">Careers</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">Contact</a></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 className="text-lg font-medium mb-4">Resources</h3>
+              <ul className="space-y-2">
+                <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">Documentation</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">Use Cases</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">Tutorials</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">API</a></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 className="text-lg font-medium mb-4">Legal</h3>
+              <ul className="space-y-2">
+                <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">Terms</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">Privacy</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">Security</a></li>
+              </ul>
             </div>
           </div>
         </div>
       </footer>
-    </main>
+    </div>
   );
-}
+};
+
+export default LandingPage;
