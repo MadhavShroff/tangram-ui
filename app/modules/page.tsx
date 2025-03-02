@@ -16,6 +16,7 @@ const LogoAnimated = () => {
     );
 }
 
+// Modules Page
 const Page = () => {
 
     // State for row 2 modules

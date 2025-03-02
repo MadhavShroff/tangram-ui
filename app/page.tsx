@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { 
   ArrowRight, 
-  ChevronRight, 
   Zap, 
   Puzzle, 
   Brain, 
@@ -36,7 +35,7 @@ const LandingPage = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleSubscribe = (e) => {
+  const handleSubscribe = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     if (email && email.includes('@')) {
       // In a real implementation, you would send this to your backend
@@ -693,7 +692,7 @@ const LandingPage = () => {
       <section id="pricing" className="container mx-auto px-4 py-24">
         <h2 className="text-3xl font-medium text-center mb-2">Only Pay For What You Use</h2>
         <p className="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
-          No more wasted subscription fees. With Tangram's usage-based pricing, you only pay 
+          No more wasted subscription fees. With Tangram&apos;s usage-based pricing, you only pay 
           for the blocks and executions you actually use.
         </p>
         
@@ -711,7 +710,7 @@ const LandingPage = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <h4 className="font-medium mb-2">What's Included:</h4>
+                <h4 className="font-medium mb-2">What&apos;s Included:</h4>
                 <ul className="space-y-3">
                   <li className="flex items-center">
                     <div className="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center mr-3">
@@ -765,7 +764,7 @@ const LandingPage = () => {
               </div>
               <div className="ml-3">
                 <p className="text-sm font-medium">Build as many workflows as you need</p>
-                <p className="text-xs text-gray-400">You're only charged when they run</p>
+                <p className="text-xs text-gray-400">You&apos;re only charged when they run</p>
               </div>
             </div>
           </div>
@@ -784,7 +783,7 @@ const LandingPage = () => {
         <div className="bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 rounded-3xl p-12 text-center">
           <h2 className="text-3xl font-medium mb-4">Ready to transform your workflow?</h2>
           <p className="text-gray-400 max-w-2xl mx-auto mb-8">
-            Be the first to experience Tangram.ai's modular AI-powered workflow platform.
+            Be the first to experience Tangram.ai&apos;s modular AI-powered workflow platform.
           </p>
           
           <form onSubmit={handleSubscribe} className="max-w-md mx-auto relative">
@@ -805,10 +804,10 @@ const LandingPage = () => {
           </form>
           {subscribed && (
             <p className="text-center text-green-400 mt-2 text-sm">
-              Thanks! We'll notify you when we launch.
+              Thanks! We&apos;ll notify you when we launch.
             </p>
           )}
-          <p className="text-gray-500 text-sm mt-4">We respect your privacy and won't share your information.</p>
+          <p className="text-gray-500 text-sm mt-4">We respect your privacy and won&apos;t share your information.</p>
         </div>
       </section>
 
