@@ -2,7 +2,7 @@ import React from 'react';
 
 const AIConsultingStrategySlide = () => {
   return (
-    <div className="bg-black text-white p-32 min-h-screen font-sans">
+    <div className="bg-black text-white p-24 min-h-screen font-sans">
       {/* STRATEGY SECTION */}
       <div className="mb-10">
         <h2 className="text-2xl font-light tracking-wider mb-6">STRATEGY</h2>
