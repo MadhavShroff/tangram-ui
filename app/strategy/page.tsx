@@ -32,7 +32,7 @@ const AIConsultingStrategySlide = () => {
       </div>
 
       {/* COMPETITIVE ADVANTAGES SECTION */}
-      <div className="mb-10">
+      <div className="mb-10 bg-black">
         <h2 className="text-2xl font-light tracking-wider mb-6">COMPETITIVE ADVANTAGES</h2>
         
         <div className="grid grid-cols-3 gap-8">
@@ -60,7 +60,7 @@ const AIConsultingStrategySlide = () => {
       </div>
 
       {/* HYPOTHESES SECTION */}
-      <div className="mb-10">
+      <div className="mb-10 bg-black">
         <h2 className="text-2xl font-light tracking-wider mb-6">HYPOTHESES</h2>
         
         <div className="grid grid-cols-3 gap-8">
@@ -88,7 +88,7 @@ const AIConsultingStrategySlide = () => {
       </div>
 
       {/* EXAMPLES SECTION */}
-      <div className="mb-10">
+      <div className="mb-10 bg-black">
         <h2 className="text-2xl font-light tracking-wider mb-6">EXAMPLES</h2>
         
         <div className="grid grid-cols-3 gap-8">
