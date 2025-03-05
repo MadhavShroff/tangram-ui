@@ -1,0 +1,12 @@
+{
+    "builds": [
+      {
+        "src": "package.json",
+        "use": "@vercel/next",
+        "config": {
+          "installCommand": "npm ci && npm install lightningcss-linux-x64-gnu --no-save"
+        }
+      }
+    ]
+  }
+  
