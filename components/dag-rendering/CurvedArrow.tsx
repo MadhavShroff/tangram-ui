@@ -1,12 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Point } from "@/utils/types";
-
-// export class Point {
-//   x: number; y: number;
-//   constructor(x: number, y: number) {
-//     this.x = x; this.y = y;
-//   }
-// }
 
 interface IArrowHeadProps {
   to: Point;
@@ -42,23 +35,27 @@ const ArrowHead: React.FC<IArrowHeadProps> = ({ to }) => {
 };
 
 export const CurvedArrow: React.FC<ILine> = ({ from, to }) => {
-  const [radius, setRadius] = useState(50);
-  useEffect(() => {
-    const isValid = (point: Point) => point && point.x && point.y && point.x !== 0 && point.y !== 0;
-    if (isValid(from) && isValid(to)) {
-      setRadius(Math.abs(from.x - to.x) / 2);
-    }
-  }, [from, to]); // Early return for invalid or zero coordinates
-  if (!from || !to || from.x === 0 || from.y === 0 || to.x === 0 || to.y === 0) return null;
+  // Validate coordinates
+  const isValid = (point: Point) => point && point.x !== undefined && point.y !== undefined && point.x !== 0 && point.y !== 0;
+  
+  // If either point is invalid, don't render anything
+  if (!isValid(from) || !isValid(to)) {
+    return null;
+  }
+  
+  // Check if direction is valid for our implementation (must be down and to the right)
+  const deltaX = to.x - from.x;
+  const deltaY = to.y - from.y;
+  if (deltaX <= 0 || deltaY <= 0) {
+    return null;
+  }
+  
   return (
     <>
-      {/* <StraightLine from={{ ...from }} to={{ x: from.x, y: to.y - radius }} /> */}
       <CurvedLine 
         from={from} 
         to={to}
-        radius={radius}
       />
-      {/* <StraightLine from={{ x: from.x + radius - 0.25, y: to.y }} to={{ ...to }} /> */}
       <ArrowHead to={{ ...to }} />
     </>
   )
@@ -67,7 +64,6 @@ export const CurvedArrow: React.FC<ILine> = ({ from, to }) => {
 const CurvedLine: React.FC<ICurvedLine> = ({
   from,
   to,
-  radius = 20
 }) => {
   const strokeColor = 'white'; // Color of the line
   const strokeWidth = 2; // Width of the line
@@ -76,16 +72,12 @@ const CurvedLine: React.FC<ICurvedLine> = ({
   // Calculate the differences in x and y
   const deltaX = to.x - from.x;
   const deltaY = to.y - from.y;
-
-  // Ensure the line is going down and to the right
-  if (deltaX <= 0 || deltaY <= 0) {
-    // print more detailed error message
-    console.error(`Invalid coordinates: from (${from.x}, ${from.y}) to (${to.x}, ${to.y})`);
-    return null;
-  }
+  
+  // We don't need this check anymore as it's handled in the parent component
+  // The parent CurvedArrow component should have already validated these cases
 
   // Adjust the radius if necessary
-  radius = Math.min(fixedRadius, deltaX, deltaY);
+  const radius = Math.min(fixedRadius, deltaX, deltaY);
 
   // Starting point (from)
   const startX = from.x;

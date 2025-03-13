@@ -31,64 +31,64 @@ export default function TangramAnimation({
     ctx.scale(dpr, dpr);
 
      // ── (Optional) Grid Drawing ──
-     function drawGrid(
-      ctx: CanvasRenderingContext2D,
-      w: number,
-      h: number,
-      step = 50,
-      subdivisions = 5 // Number of subdivisions between main grid lines
-    ) {
-      ctx.save();
+    //  function drawGrid(
+    //   ctx: CanvasRenderingContext2D,
+    //   w: number,
+    //   h: number,
+    //   step = 50,
+    //   subdivisions = 5 // Number of subdivisions between main grid lines
+    // ) {
+    //   ctx.save();
       
-      // Draw main grid lines
-      ctx.strokeStyle = "rgba(0,0,0,0.1)";
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      for (let x = 0; x <= w; x += step) {
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, h);
-      }
-      for (let y = 0; y <= h; y += step) {
-        ctx.moveTo(0, y);
-        ctx.lineTo(w, y);
-      }
-      ctx.stroke();
+    //   // Draw main grid lines
+    //   ctx.strokeStyle = "rgba(0,0,0,0.1)";
+    //   ctx.lineWidth = 1;
+    //   ctx.beginPath();
+    //   for (let x = 0; x <= w; x += step) {
+    //     ctx.moveTo(x, 0);
+    //     ctx.lineTo(x, h);
+    //   }
+    //   for (let y = 0; y <= h; y += step) {
+    //     ctx.moveTo(0, y);
+    //     ctx.lineTo(w, y);
+    //   }
+    //   ctx.stroke();
       
-      // Draw subdivision grid lines
-      ctx.strokeStyle = "rgba(0,0,0,0.05)";
-      ctx.lineWidth = 0.5;
-      ctx.beginPath();
+    //   // Draw subdivision grid lines
+    //   ctx.strokeStyle = "rgba(0,0,0,0.05)";
+    //   ctx.lineWidth = 0.5;
+    //   ctx.beginPath();
       
-      const subStep = step / subdivisions;
+    //   const subStep = step / subdivisions;
       
-      for (let x = 0; x <= w; x += subStep) {
-        // Skip if this is a main grid line
-        if (x % step === 0) continue;
+    //   for (let x = 0; x <= w; x += subStep) {
+    //     // Skip if this is a main grid line
+    //     if (x % step === 0) continue;
         
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, h);
-      }
+    //     ctx.moveTo(x, 0);
+    //     ctx.lineTo(x, h);
+    //   }
       
-      for (let y = 0; y <= h; y += subStep) {
-        // Skip if this is a main grid line
-        if (y % step === 0) continue;
+    //   for (let y = 0; y <= h; y += subStep) {
+    //     // Skip if this is a main grid line
+    //     if (y % step === 0) continue;
         
-        ctx.moveTo(0, y);
-        ctx.lineTo(w, y);
-      }
-      ctx.stroke();
+    //     ctx.moveTo(0, y);
+    //     ctx.lineTo(w, y);
+    //   }
+    //   ctx.stroke();
     
-      // Draw coordinates for main grid lines
-      ctx.fillStyle = "rgba(0,0,0,0.6)";
-      ctx.font = "10px sans-serif";
-      for (let x = 0; x <= w; x += step) {
-        ctx.fillText(`${x}`, x + 2, 10);
-      }
-      for (let y = 0; y <= h; y += step) {
-        ctx.fillText(`${y}`, 2, y - 2);
-      }
-      ctx.restore();
-    }
+    //   // Draw coordinates for main grid lines
+    //   ctx.fillStyle = "rgba(0,0,0,0.6)";
+    //   ctx.font = "10px sans-serif";
+    //   for (let x = 0; x <= w; x += step) {
+    //     ctx.fillText(`${x}`, x + 2, 10);
+    //   }
+    //   for (let y = 0; y <= h; y += step) {
+    //     ctx.fillText(`${y}`, 2, y - 2);
+    //   }
+    //   ctx.restore();
+    // }
 
     // ── Cubic Bezier Easing Function ──
     function cubicBezier(p1x: number, p1y: number, p2x: number, p2y: number) {
@@ -405,7 +405,7 @@ export default function TangramAnimation({
     function loop() {
         if (!ctx) return;
       ctx.clearRect(0, 0, width, height);
-      drawGrid(ctx, width, height, 50);
+      // drawGrid(ctx, width, height, 50);
       update();
 
       // Draw every piece in the new positions

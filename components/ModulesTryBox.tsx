@@ -149,7 +149,6 @@ const ModulesTryBox: FC = () => {
                                 className="mt-5 bg-orange-500 text-black px-4 py-2 rounded font-semibold hover:bg-orange-400 sm:text-orange-500"
                             >
                                 Try Module
-                            {/* Replace inline SVG with lucide-react icon */}
                             <ExternalLink className="inline-block ml-2 w-4 h-4" />
                             </button>
                         </div>

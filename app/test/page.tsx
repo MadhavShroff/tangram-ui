@@ -156,17 +156,17 @@ const TestPage = () => {
   }, [followUp]);
 
   return (
-    <div className="bg-black min-h-screen flex flex-col relative">
+    <div className="bg-black h-screen flex flex-col relative overflow-hidden">
       {/* Main content area */}
-      <div className="w-full px-2 py-2 max-w-[1400px] mx-auto">
-        <div className="flex-1 border-2 border-[#f2f2f2] rounded-xl mb-2">
+      <div className="w-full h-full px-2 py-2 max-w-[1400px] mx-auto flex flex-col">
+        <div className="flex-1 border-2 border-[#f2f2f2] rounded-xl h-full">
           <ContextBox contextItems={contextItems} />
           <GraphView graph={graph} />
         </div>
       </div>
 
       {/* Fixed textarea at bottom center */}
-      <div className="fixed flex items-center bottom-16 left-1/2 transform -translate-x-1/2 border border-[#f2f2f2] rounded-xl w-[600px] max-w-[90%] p-3 bg-black">
+      <div className="fixed flex items-center bottom-8 left-1/2 transform -translate-x-1/2 border border-[#f2f2f2] rounded-xl w-[600px] max-w-[90%] p-3 bg-black">
         <textarea
           ref={textareaRef}
           value={followUp}
