@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { CurvedArrow } from "./CurvedArrow";
 import Block from "./Block";
+import LargerBlock from "./LargerBlock";
 import { Graph, Node, Point } from "@/utils/types";
 
 export const ModuleView = ({ graph, moduleName }: { graph: Graph, moduleName: string }) => {
@@ -29,8 +30,17 @@ export const ModuleView = ({ graph, moduleName }: { graph: Graph, moduleName: st
       <>
         <div>{moduleName}</div>
         {graph.nodes.map((node: Node, index: number) => {
+          // Check if this node's ID matches the module name (case-insensitive)
+          // or if it's the primary processing node (usually with black color)
+          const isMainModule = 
+            node.id.toLowerCase() === moduleName.toLowerCase() || 
+            node.color === "#000000";
+          
+          // Use the appropriate block component based on the check
+          const BlockComponent = isMainModule ? LargerBlock : Block;
+          
           return (
-            <Block
+            <BlockComponent
               key={index}
               node={node}
               onClick={() => {
