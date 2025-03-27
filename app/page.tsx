@@ -20,6 +20,16 @@ import {
   CornerRightDown
 } from "lucide-react";
 import TangramAnimation from "@/components/TangramAnimation";
+import { useStytchUser } from "@stytch/nextjs";
+
+const UserInfo = () => {
+  const {user, isInitialized, fromCache} = useStytchUser();
+
+  if (!isInitialized) {
+    return <p>Loading...</p>;
+  }
+  return (<div>Welcome, {user?.name.first_name}</div>);
+}
 
 const LandingPage = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -45,6 +55,11 @@ const LandingPage = () => {
       setTimeout(() => setSubscribed(false), 3000);
     }
   };
+
+  const { user, isInitialized } = useStytchUser();
+
+  console.log("Landing Page Rendered, user: ", user);
+  console.log("Landing Page Rendered, isInitialized: ", isInitialized);
 
   return (
     <div className="min-h-screen bg-black text-white flex flex-col">
@@ -98,6 +113,7 @@ const LandingPage = () => {
         
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-medium text-center leading-tight mb-6 z-10">
            tangram.ai
+           <UserInfo />
         </h1>
         
         <p className="text-xl md:text-2xl text-gray-300 text-center max-w-3xl mb-6">

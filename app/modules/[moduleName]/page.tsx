@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ModuleView } from "@/components/dag-rendering/ModuleView";
-import { Graph, Node } from "@/utils/types";
+import { Graph } from "@/utils/types";
 import { toPascalCase } from "@/utils/utils";
 import { GraphConstructor, NodeConstructor, IOTypeConstructor } from "@/utils/constructors";
 

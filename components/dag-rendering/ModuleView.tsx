@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { CurvedArrow } from "./CurvedArrow";
 import Block from "./Block";
-import { PromptOnTop } from "./PromptOnTop";
 import { Graph, Node, Point } from "@/utils/types";
 
-export const GraphView = ({ graph }: { graph: Graph }) => {
-  const [promptOutputCoordinate, setPromptOutputCoordinate] = useState<Point>(new Point(0, 0));
+export const ModuleView = ({ graph, moduleName }: { graph: Graph, moduleName: string }) => {
+  const [promptOutputCoordinate] = useState<Point>(new Point(0, 0));
   const [inputCoordsMap, setInputCoordsMap] = useState<Map<string, Point>>(new Map());
   const [outputCoordsMap, setOutputCoordsMap] = useState<Map<string, Point>>(new Map());
   // const [nodeSelected, setNodeSelected] = useState<Node>();
@@ -28,14 +27,7 @@ export const GraphView = ({ graph }: { graph: Graph }) => {
   if (graph)
     return (
       <>
-        <div className="h-auto flex flex-row">
-          <PromptOnTop
-            prompt={graph.prompt}
-            onUpdatePoint={(output) => {
-              setPromptOutputCoordinate(output);
-            }}
-          />
-        </div>
+        <div>{moduleName}</div>
         {graph.nodes.map((node: Node, index: number) => {
           return (
             <Block
