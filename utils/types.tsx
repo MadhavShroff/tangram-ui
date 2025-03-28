@@ -34,7 +34,6 @@ export class Point {
   }
 }
 
-
 export type MessageVersion = {
   _id: string;
   text: string;
